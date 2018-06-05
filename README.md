@@ -11,7 +11,7 @@ A baker can:
 2. eat one or more cookies in the cookie jar
 3. count the cookies in the cookie jar
 
-All cookie jar transactions have a 6 hex digit prefix, which is the first 6 hex characters of the SHA-512 hash of "cookiejar" (that is, "a4d219").
+All cookie jar transactions have the same 6 hex digit prefix, which is the first 6 hex characters of the SHA-512 hash of "cookiejar" (that is, "a4d219").
 The cookie jar is identified by `mycookiejar` with a corresponding public/private keypair.
 The cookie jar count is stored at an address derived from:
 * a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
