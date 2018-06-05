@@ -73,17 +73,22 @@ class CookieJarTransactionHandler(TransactionHandler):
     def apply(self, transaction, context):
         """This implements the apply function for the TransactionHandler class.
 
-           The apply function does most of the work for this class.
+           The apply function does most of the work for this class by
+           processing a transaction for the cookiejar transaction family.
         """
+
+        # Get the payload and extract the cookiejar-specific information.
         header = transaction.header
         payload_list = transaction.payload.decode().split(",")
         operation = payload_list[0]
         amount = payload_list[1]
 
+        # Get the public key sent from the client.
         from_key = header.signer_public_key
 
-        LOGGER.info("Operation = "+ operation)
 
+        # Perform the operation
+        LOGGER.info("Operation = " + operation)
         if operation == "bake":
             self._make_bake(context, amount, from_key)
         elif operation == "eat":

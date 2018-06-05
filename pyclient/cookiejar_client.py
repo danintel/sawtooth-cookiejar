@@ -22,7 +22,6 @@ import base64
 import time
 import requests
 import yaml
-#import Exception
 
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
@@ -50,6 +49,10 @@ class CookieJarClient(object):
     """
 
     def __init__(self, base_url, key_file=None):
+        """Initialize the client class.
+
+           This is mainly getting the key pair and the TF prefix.
+        """
         self._base_url = base_url
 
         if key_file is None:
@@ -103,12 +106,15 @@ class CookieJarClient(object):
         except BaseException:
             return None
 
-    # Send a REST command to the REST API.
-    # Called by count() &  _wrap_and_send() (the latter for bake() & eat()):
     def _send_to_restapi(self,
                          suffix,
                          data=None,
                          content_type=None):
+        """Send a REST command to the Validator via the REST API.
+
+           Called by count() &  _wrap_and_send().
+           The latter caller is made on the behalf of bake() & eat().
+        """
         if self._base_url.startswith("http://"):
             url = "{}/{}".format(self._base_url, suffix)
         else:
@@ -128,21 +134,22 @@ class CookieJarClient(object):
             if not result.ok:
                 raise Exception("Error {}: {}".format(
                     result.status_code, result.reason))
-
         except requests.ConnectionError as err:
             raise Exception(
                 'Failed to connect to {}: {}'.format(url, str(err)))
-
         except BaseException as err:
             raise Exception(err)
 
         return result.text
 
-    # Create a transaction, then wrap it in a batch.
-    # Called by bake() and eat():
     def _wrap_and_send(self,
                        action,
                        *values):
+        """Create a transaction, then wrap it in a batch.
+
+           Even single transactions must be wrapped into a batch.
+           Called by bake() and eat().
+        """
 
         # Generate a CSV UTF-8 encoded string as the payload
         raw_payload = action
@@ -194,7 +201,8 @@ class CookieJarClient(object):
         # Create a Batch List from Batch above
         batch_list = BatchList(batches=[batch])
 
-        # Send batch_list to rest-api
+        # Send batch_list to the REST API
         return self._send_to_restapi("batches",
                                      batch_list.SerializeToString(),
                                      'application/octet-stream')
+
