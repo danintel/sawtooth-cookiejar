@@ -86,7 +86,6 @@ class CookieJarTransactionHandler(TransactionHandler):
         # Get the public key sent from the client.
         from_key = header.signer_public_key
 
-
         # Perform the operation
         LOGGER.info("Operation = " + operation)
         if operation == "bake":
