@@ -17,12 +17,12 @@ The cookie jar count is stored at an address derived from a prefix
 the SHA-512 hash of "mycookiejar".
 
 # Components
-The Python application is built in two parts:
-1. The client application is written in two parts:
+The cookie jar transaction family, written in Python 3, contains two parts:
+1. The client application has two parts:
 * `pyclient/cookiejar_client.py`
 contains the client class which interfaces to the Sawtooth validator via the REST API
 * `pyclient/cookiejar.py` is the Cookie Jar CLI app
-
+The client container is built with files setup.py and Dockerfile.
 
 2. The Transaction Processor is written in Python, `pyprocessor/cookiejar_tp.py`
 
@@ -43,18 +43,19 @@ To build TP code for Python and run the cookiejar.py example:
 ```bash
 sudo docker-compose up --build
 ```
+The docker file creates a genesis block, which contains initial Sawtooth settings, then generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
 # Usage
 
-To launch the client shell container, you could do this:
+Launch the client shell container as follows:
 ```bash
 sudo docker exec -it cookiejar-client bash
 ```
-
-You can locate the correct Docker client container name by using
+You can locate the correct Docker client container name, if desired, with
 `sudo docker ps`.
 
-Sample command usage:
+In the client shell you just started above, run the cookiejar.py application.
+Here are some sample commands:
 
 ```bash
 cookiejar.py bake 100 # Add 100 cookies to the cookie jar
