@@ -13,9 +13,9 @@ A baker can:
 
 All cookie jar transactions have the same 6 hex digit prefix, which is the first 6 hex characters of the SHA-512 hash of "cookiejar" (that is, "a4d219").
 The cookie jar is identified by `mycookiejar` with a corresponding public/private keypair.
-The cookie jar count is stored at an address derived from:
+The cookie jar count is stored at an 70 hex digit address derived from:
 * a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
-* the SHA-512 hash of the "mycookiejar" public key in hex.
+* the first 64 hex characters of the SHA-512 hash of the "mycookiejar" public key in hex.
 
 # Components
 The cookie jar transaction family contains two parts, both written in Python 3:
