@@ -1,8 +1,7 @@
 # sawtooth-cookiejar
-A simple Sawtooth "cookiejar" Transaction Family example (processor + client)
+Simple Sawtooth cookie jar example of a transaction family (processor + client)
 
 # Introduction
-
 This is a minimal example of a Sawtooth 1.0 application.
 This example demonstrates a simple use case, where a baker creates or eats one or more cookies.
 
@@ -11,10 +10,10 @@ A baker can:
 2. eat one or more cookies in the cookie jar
 3. count the cookies in the cookie jar
 
-The cookie jar is identified by "mycookiejar" with a corresponding private key.
-The cookie jar count is stored at an address derived from a prefix
-(the "cookiejar" Transaction Family namespace) and
-the SHA-512 hash of "mycookiejar".
+The cookie jar is identified by `mycookiejar` with a corresponding private key.
+The cookie jar count is stored at an address derived from:
+* a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
+* the SHA-512 hash of the "mycookiejar" public key in hex.
 
 # Components
 The cookie jar transaction family, written in Python 3, contains two parts:
@@ -26,9 +25,7 @@ The client container is built with files setup.py and Dockerfile.
 
 2. The Transaction Processor is written in Python, `pyprocessor/cookiejar_tp.py`
 
-**NOTE**
-
-# Pre-requisites
+# Prerequisites
 
 This example uses docker-compose and Docker containers. If you do not have these installed please follow the instructions here: https://docs.docker.com/install/
 
@@ -43,11 +40,11 @@ To build TP code for Python and run the cookiejar.py example:
 ```bash
 sudo docker-compose up --build
 ```
-The docker file creates a genesis block, which contains initial Sawtooth settings, then generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
+The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
 # Usage
 
-Launch the client shell container as follows:
+In a separate shell from above, launch the client shell container:
 ```bash
 sudo docker exec -it cookiejar-client bash
 ```
