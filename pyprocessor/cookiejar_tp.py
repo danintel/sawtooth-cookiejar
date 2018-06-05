@@ -53,6 +53,10 @@ class CookieJarTransactionHandler(TransactionHandler):
     in a cookie jar.
     """
     def __init__(self, namespace_prefix):
+        """Initialize the transaction handler class.
+
+           This is setting the "cookiejar" TF namespace prefix.
+        """
         self._namespace_prefix = namespace_prefix
 
     @property

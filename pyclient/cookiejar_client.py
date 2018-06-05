@@ -51,7 +51,7 @@ class CookieJarClient(object):
     def __init__(self, base_url, key_file=None):
         """Initialize the client class.
 
-           This is mainly getting the key pair and the TF prefix.
+           This is mainly getting the key pair and computing the address.
         """
         self._base_url = base_url
 
@@ -75,7 +75,6 @@ class CookieJarClient(object):
 
         self._signer = CryptoFactory(create_context('secp256k1')) \
             .new_signer(private_key)
-
         self._public_key = self._signer.get_public_key().as_hex()
 
         # Address is 6-char TF prefix + hash of "mycookiejar"'s public key
@@ -151,7 +150,7 @@ class CookieJarClient(object):
            Called by bake() and eat().
         """
 
-        # Generate a CSV UTF-8 encoded string as the payload
+        # Generate a CSV UTF-8 encoded string as the payload.
         raw_payload = action
 
         for val in values:
@@ -159,12 +158,13 @@ class CookieJarClient(object):
 
         payload = raw_payload.encode()
 
-        # Construct the address where we'll store our state
+        # Construct the address where we'll store our state.
+        # We just have one input and output address (the same one).
         address = self._address
         input_address_list = [address]
         output_address_list = [address]
 
-        # Create a TransactionHeader
+        # Create a TransactionHeader.
         header = TransactionHeader(
             signer_public_key=self._public_key,
             family_name=FAMILY_NAME,
@@ -177,7 +177,7 @@ class CookieJarClient(object):
             nonce=time.time().hex().encode()
         ).SerializeToString()
 
-        # Create a Transaction from the header and payload above
+        # Create a Transaction from the header and payload above.
         transaction = Transaction(
             header=header,
             payload=payload,
@@ -186,13 +186,13 @@ class CookieJarClient(object):
 
         transaction_list = [transaction]
 
-        # Create a BatchHeader from transaction_list above
+        # Create a BatchHeader from transaction_list above.
         header = BatchHeader(
             signer_public_key=self._public_key,
             transaction_ids=[txn.header_signature for txn in transaction_list]
         ).SerializeToString()
 
-        # Create Batch using the BatchHeader and transaction_list above
+        # Create Batch using the BatchHeader and transaction_list above.
         batch = Batch(
             header=header,
             transactions=transaction_list,
