@@ -18,9 +18,13 @@ the SHA-512 hash of "mycookiejar".
 
 # Components
 The Python application is built in two parts:
-1. The client application is written in two parts: _client.py file representing the backend stuff and the _cli.py representing the frontend stuff. The example is built by using the setup.py file located in one directory level up.
+1. The client application is written in two parts:
+* `pyclient/cookiejar_client.py`
+contains the client class which interfaces to the Sawtooth validator via the REST API
+* `pyclient/cookiejar.py` is the Cookie Jar CLI app
 
-2. The Transaction Processor is written in Python.
+
+2. The Transaction Processor is written in Python, `pyprocessor/cookiejar_tp.py`
 
 **NOTE**
 
@@ -59,5 +63,13 @@ cookiejar.py count # Display the number of cookies in the cookie jar
 
 ```
 
+## Contributing
+
+This FAQ is Apache 2.0 licensed and accepts contributions via
+[GitHub](https://github.com/danintel/sawtooth-faq) pull requests.
+Each commit must include a `Signed-off-by:` in the commit message (`git commit -s`). This sign-off means you agree the commit satisfies the [Developer Certificate of Origin (DCO).](https://developercertificate.org/)
+
 # License
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
+
+© Copyright 2018, Intel Corporation.
