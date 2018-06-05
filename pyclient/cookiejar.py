@@ -27,7 +27,6 @@ import sys
 import traceback
 
 from colorlog import ColoredFormatter
-
 from cookiejar_client import CookieJarClient
 
 DISTRIBUTION_NAME = 'cookiejar'

@@ -27,13 +27,11 @@ from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
 from sawtooth_signing import ParseError
 from sawtooth_signing.secp256k1 import Secp256k1PrivateKey
-
 from sawtooth_sdk.protobuf.transaction_pb2 import TransactionHeader
 from sawtooth_sdk.protobuf.transaction_pb2 import Transaction
 from sawtooth_sdk.protobuf.batch_pb2 import BatchList
 from sawtooth_sdk.protobuf.batch_pb2 import BatchHeader
 from sawtooth_sdk.protobuf.batch_pb2 import Batch
-
 
 # The Transaction Family Name
 FAMILY_NAME = 'cookiejar'
@@ -105,10 +103,7 @@ class CookieJarClient(object):
         except BaseException:
             return None
 
-    def _send_to_restapi(self,
-                         suffix,
-                         data=None,
-                         content_type=None):
+    def _send_to_restapi(self, suffix, data=None, content_type=None):
         """Send a REST command to the Validator via the REST API.
 
            Called by count() &  _wrap_and_send().
@@ -141,9 +136,7 @@ class CookieJarClient(object):
 
         return result.text
 
-    def _wrap_and_send(self,
-                       action,
-                       *values):
+    def _wrap_and_send(self, action, *values):
         """Create a transaction, then wrap it in a batch.
 
            Even single transactions must be wrapped into a batch.
