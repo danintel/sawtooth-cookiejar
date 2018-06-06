@@ -30,7 +30,7 @@ FAMILY_NAME = "cookiejar"
 # TF Prefix is first 6 characters of SHA-512("cookiejar"), a4d219
 
 def _hash(data):
-    '''Get the SHA-512 hash and return the result as hex characters.'''
+    '''Compute the SHA-512 hash and return the result as hex characters.'''
     return hashlib.sha512(data).hexdigest()
 
 def _get_cookiejar_address(from_key):
@@ -90,7 +90,7 @@ class CookieJarTransactionHandler(TransactionHandler):
         # Get the public key sent from the client.
         from_key = header.signer_public_key
 
-        # Perform the operation
+        # Perform the operation.
         LOGGER.info("Operation = " + operation)
         if operation == "bake":
             self._make_bake(context, amount, from_key)

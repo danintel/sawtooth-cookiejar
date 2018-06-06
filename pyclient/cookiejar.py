@@ -91,7 +91,7 @@ def create_parser(prog_name):
     return parser
 
 def _get_private_keyfile():
-    '''Get the key for "mycookiejar'''
+    '''Get the private key for "mycookiejar".'''
     home = os.path.expanduser("~")
     key_dir = os.path.join(home, ".sawtooth", "keys")
     return '{}/{}.priv'.format(key_dir, "mycookiejar")
@@ -121,7 +121,7 @@ def do_count():
         raise Exception("Cookie jar data not found")
 
 def main(prog_name=os.path.basename(sys.argv[0]), args=None):
-    '''Entry point function for the CLI'''
+    '''Entry point function for the client CLI.'''
     try:
         if args is None:
             args = sys.argv[1:]
