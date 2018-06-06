@@ -32,6 +32,8 @@ from cookiejar_client import CookieJarClient
 DISTRIBUTION_NAME = 'cookiejar'
 
 # hard-coded for simplicity (otherwise get the URL from the args in main):
+#DEFAULT_URL = 'http://localhost:8008'
+# For Docker:
 DEFAULT_URL = 'http://rest-api:8008'
 
 def create_console_handler(verbose_level):
