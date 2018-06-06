@@ -70,5 +70,6 @@ Each commit must include a `Signed-off-by:` in the commit message (`git commit -
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
 
 ![Photo of sawtooth cookie cutters]( sawtooth-cookie-cutters.jpg "sawtooth cookie cutters")
+*Antique sawtooth cookie cutters.*
 
 © Copyright 2018, Intel Corporation.
