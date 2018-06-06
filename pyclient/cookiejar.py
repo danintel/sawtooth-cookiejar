@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ------------------------------------------------------------------------------
-"""
+'''
 Command line interface for cookiejar TF.
 Parses command line arguments and passes to the CookieJarClient class
 to process.
-"""
+'''
 
 import argparse
 import logging
@@ -35,7 +35,7 @@ DISTRIBUTION_NAME = 'cookiejar'
 DEFAULT_URL = 'http://rest-api:8008'
 
 def create_console_handler(verbose_level):
-    """Setup console logging."""
+    '''Setup console logging.'''
     del verbose_level # unused
     clog = logging.StreamHandler()
     formatter = ColoredFormatter(
@@ -56,13 +56,13 @@ def create_console_handler(verbose_level):
     return clog
 
 def setup_loggers(verbose_level):
-    """Setup logging."""
+    '''Setup logging.'''
     logger = logging.getLogger()
     logger.setLevel(logging.DEBUG)
     logger.addHandler(create_console_handler(verbose_level))
 
 def create_parser(prog_name):
-    """Create the command line argument parser for the cookiejar CLI."""
+    '''Create the command line argument parser for the cookiejar CLI.'''
     parent_parser = argparse.ArgumentParser(prog=prog_name, add_help=False)
 
     parser = argparse.ArgumentParser(
@@ -91,27 +91,27 @@ def create_parser(prog_name):
     return parser
 
 def _get_private_keyfile():
-    """Get the key for "mycookiejar"""
+    '''Get the key for "mycookiejar'''
     home = os.path.expanduser("~")
     key_dir = os.path.join(home, ".sawtooth", "keys")
     return '{}/{}.priv'.format(key_dir, "mycookiejar")
 
 def do_bake(args):
-    """Subcommand to bake cookies.  Calls client class to do the baking."""
+    '''Subcommand to bake cookies.  Calls client class to do the baking.'''
     privkeyfile = _get_private_keyfile()
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     response = client.bake(args.value)
     print("Bake Response: {}".format(response))
 
 def do_eat(args):
-    """Subcommand to eat cookies.  Calls client class to do the eating."""
+    '''Subcommand to eat cookies.  Calls client class to do the eating.'''
     privkeyfile = _get_private_keyfile()
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     response = client.eat(args.value)
     print("Eat Response: {}".format(response))
 
 def do_count():
-    """Subcommand to count cookies.  Calls client class to do the counting."""
+    '''Subcommand to count cookies.  Calls client class to do the counting.'''
     privkeyfile = _get_private_keyfile()
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     data = client.count()
@@ -121,7 +121,7 @@ def do_count():
         raise Exception("Cookie jar data not found")
 
 def main(prog_name=os.path.basename(sys.argv[0]), args=None):
-    """Entry point function for the CLI"""
+    '''Entry point function for the CLI'''
     try:
         if args is None:
             args = sys.argv[1:]

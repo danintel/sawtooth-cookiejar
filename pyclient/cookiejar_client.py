@@ -12,10 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # ------------------------------------------------------------------------------
-"""
+'''
 CookieJarClient class interfaces with Sawtooth through the REST API.
 It accepts input from a client CLI/GUI/BUI or other interface.
-"""
+'''
 
 import hashlib
 import base64
@@ -41,16 +41,16 @@ def _hash(data):
     return hashlib.sha512(data).hexdigest()
 
 class CookieJarClient(object):
-    """Client Cookie Jar class
+    '''Client Cookie Jar class
 
     Supports "bake", "eat", and "count" functions.
-    """
+    '''
 
     def __init__(self, base_url, key_file=None):
-        """Initialize the client class.
+        '''Initialize the client class.
 
            This is mainly getting the key pair and computing the address.
-        """
+        '''
         self._base_url = base_url
 
         if key_file is None:
@@ -84,11 +84,11 @@ class CookieJarClient(object):
     # 2. Create a transaction and a batch
     # 2. Send to REST API
     def bake(self, value):
-        """Bake @value cookies for the cookie jar."""
+        '''Bake @value cookies for the cookie jar.'''
         return self._wrap_and_send("bake", value)
 
     def eat(self, value):
-        """Eat @value cookies from the cookie jar."""
+        '''Eat @value cookies from the cookie jar.'''
         try:
             ret_value = self._wrap_and_send("eat", value)
         except Exception:
@@ -96,7 +96,7 @@ class CookieJarClient(object):
         return ret_value
 
     def count(self):
-        """Count the number of cookies in the cookie jar."""
+        '''Count the number of cookies in the cookie jar.'''
         result = self._send_to_restapi("state/{}".format(self._address))
         try:
             return base64.b64decode(yaml.safe_load(result)["data"])
@@ -104,11 +104,11 @@ class CookieJarClient(object):
             return None
 
     def _send_to_restapi(self, suffix, data=None, content_type=None):
-        """Send a REST command to the Validator via the REST API.
+        '''Send a REST command to the Validator via the REST API.
 
            Called by count() &  _wrap_and_send().
            The latter caller is made on the behalf of bake() & eat().
-        """
+        '''
         if self._base_url.startswith("http://"):
             url = "{}/{}".format(self._base_url, suffix)
         else:
@@ -137,11 +137,11 @@ class CookieJarClient(object):
         return result.text
 
     def _wrap_and_send(self, action, *values):
-        """Create a transaction, then wrap it in a batch.
+        '''Create a transaction, then wrap it in a batch.
 
            Even single transactions must be wrapped into a batch.
            Called by bake() and eat().
-        """
+        '''
 
         # Generate a CSV UTF-8 encoded string as the payload.
         raw_payload = action
