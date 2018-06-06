@@ -24,6 +24,11 @@ from sawtooth_sdk.processor.exceptions import InvalidTransaction
 from sawtooth_sdk.processor.exceptions import InternalError
 from sawtooth_sdk.processor.core import TransactionProcessor
 
+# hard-coded for simplicity (otherwise get the URL from the args in main):
+#DEFAULT_URL = 'tcp://localhost:4004'
+# For Docker:
+DEFAULT_URL = 'tcp://validator:4004'
+
 LOGGER = logging.getLogger(__name__)
 
 FAMILY_NAME = "cookiejar"
@@ -160,7 +165,7 @@ def main():
         logging.getLogger().setLevel(logging.DEBUG)
 
         # Register the Transaction Handler and start it.
-        processor = TransactionProcessor(url='tcp://validator:4004')
+        processor = TransactionProcessor(url=DEFAULT_URL)
         sw_namespace = _hash(FAMILY_NAME.encode('utf-8'))[0:6]
         handler = CookieJarTransactionHandler(sw_namespace)
         processor.add_handler(handler)
