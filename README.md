@@ -43,6 +43,12 @@ sudo docker-compose up --build
 ```
 The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
+# Future Feature
+To run the C++ transaction processor instead of Python, run:
+```bash
+sudo docker-compose -f docker-compose-cxx.yaml up --build
+```
+
 # Usage
 In a separate shell from above, launch the client shell container:
 ```bash
@@ -61,15 +67,32 @@ cookiejar.py count # Display the number of cookies in the cookie jar
 
 ```
 
+## Exercises for the User
+* Translate the Python transaction processor into another programming language.
+See
+[Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
+and
+[Sawtooth SDK examples](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples)
+* Also translate the Python application into another programming language
+* Add a new function, `empty` which empties the cookie jar (sets the count to 0) in the client and processor
+* Add the ability to specify the cookie jar owner key (client only).  Use
+[Simplewallet](https://github.com/askmish/sawtooth-simplewallet) as an example
+* Replace simple CSV serialization with [Protobuf](https://developers.google.com/protocol-buffers/) serialization in the client and processor.
+Use the Sawtooth XO example application as an example
+
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
 [GitHub](https://github.com/danintel/sawtooth-faq) pull requests.
 Each commit must include a `Signed-off-by:` in the commit message (`git commit -s`). This sign-off means you agree the commit satisfies the [Developer Certificate of Origin (DCO).](https://developercertificate.org/)
 
+This software is derived from the
+[Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
+application.
+
 # License
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
 
 ![Photo of sawtooth cookie cutters]( sawtooth-cookie-cutters.jpg "sawtooth cookie cutters")
-*Antique sawtooth cookie cutters.*
+<br /> *Antique sawtooth cookie cutters.*
 
 © Copyright 2018, Intel Corporation.

@@ -54,8 +54,7 @@ class CookieJarTransactionHandler(TransactionHandler):
     Transaction Processor class for the cookiejar Transaction Family.
 
     This TP communicates with the Validator using the accept/get/set functions.
-    This implements functions to "bake", "eat", or "count" cookies
-    in a cookie jar.
+    This implements functions to "bake" or "eat" cookies in a cookie jar.
     '''
     def __init__(self, namespace_prefix):
         '''Initialize the transaction handler class.
