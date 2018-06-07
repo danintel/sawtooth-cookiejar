@@ -1,10 +1,10 @@
-# sawtooth-cookiejar
-Simple cookie jar Sawtooth application example
+# Sawtooth Cookie Jar
+Simple cookie jar example of a Sawtooth application.
 
-# Introduction
+## Introduction
 This is a minimal example of a Sawtooth 1.0 application,
 with a transaction processor and corresponding client.
-This example demonstrates a simple use case, where a baker bakes or eats cookies in a virtual cookie jar.
+This example demonstrates a simple use case, where a baker bakes or eats cookies saved in a virtual cookie jar.
 
 A baker can:
 1. bake one or more cookies to add to the cookie jar
@@ -17,7 +17,7 @@ The cookie jar count is stored at an 70 hex digit address derived from:
 * a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
 * the first 64 hex characters of the SHA-512 hash of the "mycookiejar" public key in hex.
 
-# Components
+## Components
 The cookie jar transaction family contains two parts, both written in Python 3:
 1. The client application has two parts:
 * `pyclient/cookiejar_client.py`
@@ -27,7 +27,7 @@ The client container is built with files setup.py and Dockerfile.
 
 2. The Transaction Processor, `pyprocessor/cookiejar_tp.py`
 
-# Prerequisites
+## Prerequisites
 This example uses docker-compose and Docker containers. If you do not have these installed please follow the instructions here: https://docs.docker.com/install/
 
 **NOTE**
@@ -35,7 +35,7 @@ This example uses docker-compose and Docker containers. If you do not have these
 The preferred OS environment is Ubuntu 16.04.3 LTS x64.
 Although other Linux distributions which support Docker should work.
 
-# Building containers
+## Building containers
 To build TP code for Python and run the cookiejar.py example:
 
 ```bash
@@ -43,13 +43,13 @@ sudo docker-compose up --build
 ```
 The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
-# Future Feature
+### Future Feature
 To run the C++ transaction processor instead of Python, run:
 ```bash
 sudo docker-compose -f docker-compose-cxx.yaml up --build
 ```
 
-# Usage
+## Usage
 In a separate shell from above, launch the client shell container:
 ```bash
 sudo docker exec -it cookiejar-client bash
@@ -89,7 +89,7 @@ This software is derived from the
 [Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
 application.
 
-# License
+## License
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
 
 ![Photo of sawtooth cookie cutters]( sawtooth-cookie-cutters.jpg "sawtooth cookie cutters")
