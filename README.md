@@ -67,7 +67,8 @@ See
 [Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
 and
 [Sawtooth SDK examples](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples)
-* Also translate the Python application into another programming language
+* Also translate the Python client into another programming language.
+Note that the client and transaction processor do not need to be written in the same language
 * Add a new function, `empty` which empties the cookie jar (sets the count to 0) in the client and processor
 * Add the ability to specify the cookie jar owner key (client only).  Use
 [Simplewallet](https://github.com/askmish/sawtooth-simplewallet) as an example
