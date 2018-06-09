@@ -71,8 +71,14 @@ and
 * Add a new function, `empty` which empties the cookie jar (sets the count to 0) in the client and processor
 * Add the ability to specify the cookie jar owner key (client only).  Use
 [Simplewallet](https://github.com/askmish/sawtooth-simplewallet) as an example
+* Replace simple CSV serialization with [CBOR](http://cbor.io/) serialization in the client and processor.
+Use the Sawtooth
+["inkey"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/intkey_python)
+example application as a pattern
 * Replace simple CSV serialization with [Protobuf](https://developers.google.com/protocol-buffers/) serialization in the client and processor.
-Use the Sawtooth XO example application as an example
+Use the Sawtooth
+["XO"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/xo_python)
+example application as a pattern
 
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
