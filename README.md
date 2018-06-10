@@ -61,7 +61,7 @@ cookiejar.py eat 50    # Remove 50 cookies from the cookie jar
 cookiejar.py count     # Display the number of cookies in the cookie jar
 ```
 
-To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `docker-compose down` .
+To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `sudo docker-compose down` .
 
 ## Exercises for the User
 * Translate the Python transaction processor into another programming language.
