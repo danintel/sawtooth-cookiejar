@@ -29,7 +29,7 @@ import traceback
 from colorlog import ColoredFormatter
 from cookiejar_client import CookieJarClient
 
-DISTRIBUTION_NAME = 'cookiejar'
+KEY_NAME = 'mycookiejar'
 
 # hard-coded for simplicity (otherwise get the URL from the args in main):
 #DEFAULT_URL = 'http://localhost:8008'
@@ -92,29 +92,29 @@ def create_parser(prog_name):
                           parents=[parent_parser])
     return parser
 
-def _get_private_keyfile():
-    '''Get the private key for "mycookiejar".'''
+def _get_private_keyfile(key_name):
+    '''Get the private key for key_name.'''
     home = os.path.expanduser("~")
     key_dir = os.path.join(home, ".sawtooth", "keys")
-    return '{}/{}.priv'.format(key_dir, "mycookiejar")
+    return '{}/{}.priv'.format(key_dir, key_name)
 
 def do_bake(args):
     '''Subcommand to bake cookies.  Calls client class to do the baking.'''
-    privkeyfile = _get_private_keyfile()
+    privkeyfile = _get_private_keyfile(KEY_NAME)
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     response = client.bake(args.value)
     print("Bake Response: {}".format(response))
 
 def do_eat(args):
     '''Subcommand to eat cookies.  Calls client class to do the eating.'''
-    privkeyfile = _get_private_keyfile()
+    privkeyfile = _get_private_keyfile(KEY_NAME)
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     response = client.eat(args.value)
     print("Eat Response: {}".format(response))
 
 def do_count():
     '''Subcommand to count cookies.  Calls client class to do the counting.'''
-    privkeyfile = _get_private_keyfile()
+    privkeyfile = _get_private_keyfile(KEY_NAME)
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
     data = client.count()
     if data is not None:
