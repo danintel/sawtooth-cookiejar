@@ -43,13 +43,14 @@ sudo docker-compose up --build
 ```
 The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
+
 ## Usage
 In a separate shell from above, launch the client shell container:
 ```bash
 sudo docker exec -it cookiejar-client bash
 ```
 You can locate the correct Docker client container name, if desired, with
-`sudo docker ps`.
+`sudo docker ps` .
 
 In the client shell you just started above, run the cookiejar.py application.
 Here are some sample commands:
@@ -58,8 +59,9 @@ Here are some sample commands:
 cookiejar.py bake 100  # Add 100 cookies to the cookie jar
 cookiejar.py eat 50    # Remove 50 cookies from the cookie jar
 cookiejar.py count     # Display the number of cookies in the cookie jar
-
 ```
+
+To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `docker-compose down` .
 
 ## Exercises for the User
 * Translate the Python transaction processor into another programming language.
