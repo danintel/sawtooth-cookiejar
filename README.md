@@ -39,15 +39,15 @@ Although other Linux distributions which support Docker should work.
 ### Building Docker containers
 To build TP code for Python and run the cookiejar.py example:
 
-```bash
+```
 sudo docker-compose up --build
 ```
-The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
+The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, Cookie Jar TP, and REST API.
 
 
 ### Docker client
 In a separate shell from above, launch the client shell container:
-```bash
+```
 sudo docker exec -it cookiejar-client bash
 ```
 You can locate the correct Docker client container name, if desired, with
@@ -56,21 +56,28 @@ You can locate the correct Docker client container name, if desired, with
 In the client shell you just started above, run the cookiejar.py application.
 Here are some sample commands:
 
-```bash
+```
 cookiejar.py bake 100  # Add 100 cookies to the cookie jar
 cookiejar.py eat 50    # Remove 50 cookies from the cookie jar
 cookiejar.py count     # Display the number of cookies in the cookie jar
 ```
 
-To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `sudo docker-compose down` .
+To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type
+```
+sudo docker-compose down```
+
+## Building and running the C++ transaction processor
+
+For C++ TP instructions, see 
+[cxxprocessor/README.md](cxxprocessor/README.md)
 
 ## Building and running on Linux (without Docker)
 
-To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 OS installation and compile simplewallet from sources. Below is a sample procedure for python TP/client:
+To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 OS installation and compile simplewallet from sources. Below is a sample procedure for Python TP/client:
 
 
 1. Install Sawtooth on an Ubuntu 16.04 LTS x64 machine. See the [Sawtooth Applications Developer's Guide](https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html)
-2. Create the Genesis Block. See the guide above
+2. Create the Genesis Block. See Guide in previous step
 3. Install transaction processor and client-required packages:
 - listed under the `RUN` line in file `pyprocessor/Dockerfile` 
 - listed under the `RUN` line in file `pyclient/Dockerfile` 
@@ -120,6 +127,7 @@ Each commit must include a `Signed-off-by:` in the commit message (`git commit -
 This software is derived from the
 [Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
 application.
+Simplewallet supports more programming languages and handles transactions with multiple keys.
 
 ## License
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
