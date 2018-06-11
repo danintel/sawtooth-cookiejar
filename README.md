@@ -83,23 +83,16 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 - Edit file `pyprocessor/cookiejar_tp.py` and change `validator:4004` to `localhost:4004`
 - Edit file `pyclient/cookiejar.py` change `rest-api:8008` to `localhost:8008`
 6. Start the Validator, REST API, and Settings TP in separate terminal windows:
-`sudo -u sawtooth sawtooth-validator -vv`
-`sudo -u sawtooth sawtooth-rest-api -vvv`
-`sudo -u sawtooth settings-tp -vv`
+- `sudo -u sawtooth sawtooth-validator -vv`
+- `sudo -u sawtooth sawtooth-rest-api -vvv`
+- `sudo -u sawtooth settings-tp -vv`
 7. Start the cookie jar transaction processor with
 `./pyprocessor/cookiejar_tp.py`
 8. Start the cookiejar client with
 `./pyclient/cookiejar.py` and follow the "sample commands" above
- - 
+
 
 ## Exercises for the User
-* Translate the Python transaction processor into another programming language.
-See
-[Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
-and
-[Sawtooth SDK examples](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples)
-* Also translate the Python client into another programming language.
-Note that the client and transaction processor do not need to be written in the same language
 * Add a new function, `empty` which empties the cookie jar (sets the count to 0) in the client and processor
 * Add the ability to specify the cookie jar owner key (client only).  Use
 [Simplewallet](https://github.com/askmish/sawtooth-simplewallet) as an example
@@ -111,6 +104,13 @@ example application as a pattern
 Use the Sawtooth
 ["XO"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/xo_python)
 example application as a pattern
+* Translate the Python transaction processor into another programming language.
+See
+[Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
+and
+[Sawtooth SDK examples](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples)
+* Also translate the Python client into another programming language.
+Note that the client and transaction processor do not need to be written in the same language
 
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
