@@ -27,15 +27,16 @@ The client container is built with files setup.py and Dockerfile.
 
 2. The Transaction Processor, `pyprocessor/cookiejar_tp.py`
 
-## Prerequisites
+## Docker Usage
+### Prerequisites
 This example uses docker-compose and Docker containers. If you do not have these installed please follow the instructions here: https://docs.docker.com/install/
 
 **NOTE**
 
-The preferred OS environment is Ubuntu 16.04.3 LTS x64.
+The preferred OS environment is Ubuntu Linux 16.04.3 LTS x64.
 Although other Linux distributions which support Docker should work.
 
-## Building containers
+### Building Docker containers
 To build TP code for Python and run the cookiejar.py example:
 
 ```bash
@@ -44,7 +45,7 @@ sudo docker-compose up --build
 The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
 
 
-## Usage
+### Docker client
 In a separate shell from above, launch the client shell container:
 ```bash
 sudo docker exec -it cookiejar-client bash
@@ -62,6 +63,34 @@ cookiejar.py count     # Display the number of cookies in the cookie jar
 ```
 
 To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `sudo docker-compose down` .
+
+## Building and running on Linux (without Docker)
+
+To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 OS installation and compile simplewallet from sources. Below is a sample procedure for python TP/client:
+
+
+1. Install Sawtooth on an Ubuntu 16.04 LTS x64 machine. See the [Sawtooth Applications Developer's Guide](https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html)
+2. Create the Genesis Block. See the guide above
+3. Install transaction processor and client-required packages:
+- listed under the `RUN` line in file `pyprocessor/Dockerfile` 
+- listed under the `RUN` line in file `pyclient/Dockerfile` 
+4. Clone the cookie jar application:
+`git clone https://github.com/danintel/sawtooth-cookiejar`
+5. Edit the client and transaction processor to work outside of Docker as follows:
+- `cd sawtooth-cookiejar`
+- Create and checkout a new git branch:
+`git branch nodocker; git checkout nodocker`
+- Edit file `pyprocessor/cookiejar_tp.py` and change `validator:4004` to `localhost:4004`
+- Edit file `pyclient/cookiejar.py` change `rest-api:8008` to `localhost:8008`
+6. Start the Validator, REST API, and Settings TP in separate terminal windows:
+`sudo -u sawtooth sawtooth-validator -vv`
+`sudo -u sawtooth sawtooth-rest-api -vvv`
+`sudo -u sawtooth settings-tp -vv`
+7. Start the cookie jar transaction processor with
+`./pyprocessor/cookiejar_tp.py`
+8. Start the cookiejar client with
+`./pyclient/cookiejar.py` and follow the "sample commands" above
+ - 
 
 ## Exercises for the User
 * Translate the Python transaction processor into another programming language.
