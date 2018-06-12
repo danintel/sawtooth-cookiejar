@@ -42,7 +42,7 @@ To build TP code for Python and run the cookiejar.py example:
 ```bash
 sudo docker-compose up --build
 ```
-The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, and REST API.
+The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, Cookie Jar TP, and REST API.
 
 
 ### Docker client
@@ -64,9 +64,24 @@ cookiejar.py count     # Display the number of cookies in the cookie jar
 
 To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type `sudo docker-compose down` .
 
+## Building and running the C++ transaction processor
+
+The Sawtooth C++ SDK is new.
+It requires the Sawtooth nightly (not stable) build repositories and libprotobuf.so.
+See
+https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html
+
+To build and run, follow the instructions above for Docker, except run the following command to build the C++ transaction processor and start the validator:
+
+```bash
+sudo docker-compose -f docker-compose-cxx.yaml up --build
+```
+The `docker-compose-cxx.yaml` file is the same as the `docker-compose.yaml` file for Python except it builds the C++ transaction processor (using script `cxxprocessor/build.sh`) and starts the C++ TP.
+
+
 ## Building and running on Linux (without Docker)
 
-To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 OS installation and compile simplewallet from sources. Below is a sample procedure for python TP/client:
+To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 OS installation and compile simplewallet from sources. Below is a sample procedure for Python TP/client:
 
 
 1. Install Sawtooth on an Ubuntu 16.04 LTS x64 machine. See the [Sawtooth Applications Developer's Guide](https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html)
