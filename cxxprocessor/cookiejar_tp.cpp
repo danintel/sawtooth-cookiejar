@@ -21,38 +21,30 @@
 
 #include <ctype.h>
 #include <string.h>
-
 #include <log4cxx/logger.h>
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/level.h>
-
 #include <sawtooth_sdk/sawtooth_sdk.h>
 #include <sawtooth_sdk/exceptions.h>
-
 #include <cryptopp/sha.h>
 #include <cryptopp/filters.h>
 #include <cryptopp/hex.h>
-
 #include <iostream>
 #include <string>
 #include <sstream>
-
 #include <utility>
 #include <list>
 #include <vector>
 
-using namespace log4cxx;
-
-// XXX: replace with TRANSACTION_FAMILY_NAME
-static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger
-    ("cookiejar"));
-
+static const std::string DEFAULT_VALIDATOR_URL = "tcp://validator:4004";
 static const std::string TRANSACTION_FAMILY_NAME = "cookiejar";
+static const std::string TRANSACTION_FAMILY_VERSION = "1.0";
 
-#define DEFAULT_VALIDATOR_URL "tcp://validator:4004"
+using namespace log4cxx;
+static log4cxx::LoggerPtr logger(log4cxx::Logger::getLogger
+    (TRANSACTION_FAMILY_NAME));
 
-// Helper function: To generate an SHA512 hash and return it as a
-// hex-encoded string.
+// Helper function: generate a SHA512 hash and return it as hex-encoded string.
 static std::string sha512(const std::string& message) {
     std::string digest;
     CryptoPP::SHA512 hash;
@@ -61,11 +53,10 @@ static std::string sha512(const std::string& message) {
         new CryptoPP::HashFilter(hash,
           new CryptoPP::HexEncoder (
              new CryptoPP::StringSink(digest), false)));
-
     return digest;
 }
 
-// Helper function to de-tokenize std::string based on a delimiter.
+// Helper function: de-tokenize std::string based on a delimiter.
 std::vector<std::string> split(const std::string& str, char delimiter) {
     std::istringstream strStream(str);
     std::string token;
@@ -167,7 +158,6 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
         LOG4CXX_DEBUG(logger, "CookieJarApplicator::makeBake Key: "
             << customer_pubkey << " Address: " << address);
 
-
         // Get the value stored at the state address for this user
         if (this->state->GetState(&stored_balance_str, address)) {
             std::cout << "Cookie count: " << stored_balance_str << "\n";
@@ -176,8 +166,8 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
             }
         } else {
             // If the state address doesn't exist we create a new account
-            std::cout << "\nThis is the first time we baked cookies."
-                << "\nCreating a new cookie jar for user: "
+            std::cout << "This is the first time we baked cookies.\n"
+                << "Creating a new cookie jar for user: "
                 << customer_pubkey << std::endl;
         }
 
@@ -253,7 +243,7 @@ class CookieJarHandler: public sawtooth::TransactionHandler {
 
     // Return Transaction Family version string.
     std::list<std::string> versions() const {
-        return { "1.0" };
+        return { TRANSACTION_FAMILY_VERSION };
     }
 
     // Return Transaction Family namespace 6-character prefix.
@@ -276,8 +266,6 @@ class CookieJarHandler: public sawtooth::TransactionHandler {
 // Entry point function to setup and run the transaction processor.
 int main(int argc, char** argv) {
     try {
-        const std::string connectToValidatorUrl = DEFAULT_VALIDATOR_URL;
-
         // Set up a simple configuration that logs on the console.
         BasicConfigurator::configure();
         // Set maximum logging verbosity.
@@ -285,9 +273,9 @@ int main(int argc, char** argv) {
 
         // Create a transaction processor.
 
-        // 1. connect to validator at connectToValidatorUrl.
+        // 1. connect to validator at DEFAULT_VALIDATOR_URL.
         sawtooth::TransactionProcessorUPtr processor(
-            sawtooth::TransactionProcessor::Create(connectToValidatorUrl));
+            sawtooth::TransactionProcessor::Create(DEFAULT_VALIDATOR_URL));
 
         // 2. create a transaction handler for our CookieJar TF.
         sawtooth::TransactionHandlerUPtr transaction_handler(
