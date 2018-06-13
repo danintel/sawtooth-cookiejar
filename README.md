@@ -69,7 +69,7 @@ sudo docker-compose down
 ## Building and running the C++ transaction processor
 
 For C++ TP instructions, see 
-[cxxprocessor/README.md](cxxprocessor/README.md)
+[cxxprocessor/README.md](cxxprocessor/)
 
 ## Building and running on Linux (without Docker)
 
