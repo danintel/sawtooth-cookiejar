@@ -38,10 +38,10 @@ Although other Linux distributions which support Docker should work.
 
 ### Building Docker containers
 To build TP code for Python and run the cookiejar.py example:
-
 ```
 sudo docker-compose up --build
 ```
+
 The `docker-compose.yaml` file creates a genesis block, which contain initial Sawtooth settings, generates Sawtooth and client keys, and starts the Validator, Settings TP, Cookie Jar TP, and REST API.
 
 
@@ -55,7 +55,6 @@ You can locate the correct Docker client container name, if desired, with
 
 In the client shell you just started above, run the cookiejar.py application.
 Here are some sample commands:
-
 ```
 cookiejar.py bake 100  # Add 100 cookies to the cookie jar
 cookiejar.py eat 50    # Remove 50 cookies from the cookie jar
@@ -64,7 +63,8 @@ cookiejar.py count     # Display the number of cookies in the cookie jar
 
 To stop the validator and destroy the containers, type `^c` in the docker-compose window, wait for it to stop, then type
 ```
-sudo docker-compose down```
+sudo docker-compose down
+```
 
 ## Building and running the C++ transaction processor
 
