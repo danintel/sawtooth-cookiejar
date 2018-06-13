@@ -78,8 +78,8 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 1. Install Sawtooth on an Ubuntu 16.04 LTS x64 machine. See the [Sawtooth Applications Developer's Guide](https://sawtooth.hyperledger.org/docs/core/releases/latest/app_developers_guide/ubuntu.html)
 2. Create the Genesis Block. See Guide in previous step
 3. Install transaction processor and client-required packages:
-- listed under the `RUN` line in file `pyprocessor/Dockerfile` 
-- listed under the `RUN` line in file `pyclient/Dockerfile` 
+- listed under the `RUN` line in file `pyprocessor/Dockerfile`
+- listed under the `RUN` line in file `pyclient/Dockerfile`
 4. Clone the cookie jar application:
 `git clone https://github.com/danintel/sawtooth-cookiejar`
 5. Edit the client and transaction processor to work outside of Docker as follows:
