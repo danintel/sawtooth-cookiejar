@@ -68,23 +68,6 @@ std::vector<std::string> split(const std::string& str, char delimiter) {
     return tokens;
 }
 
-// Extract values from the payload.
-// For this transaction family, the payload is simply encoded
-// as a CSV (action, amount).
-void payloadToActionValue(const std::string& payload,
-                          std::string& action,
-                          int32_t& value) {
-     std::vector<std::string> vs = split(payload, ',');
-
-     if (vs.size() == 2) {
-         action = vs[0];
-         value = std::stoi(vs[1]);
-     } else {
-         std::string error = "Invalid number of arguments: expected 2, got:"
-             + std::to_string(vs.size()) + "\n";
-         throw sawtooth::InvalidTransaction(error);
-     }
-}
 
 /*******************************************************************************
  * CookieJarApplicator class
@@ -115,7 +98,7 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
         // Extract the action and value from the payload string.
         // It has already been converted from Base64, but needs deserializing.
         // It is simply stored as a CSV: action,amount.
-        payloadToActionValue(raw_data, action, amount);
+        this->payloadToActionValue(raw_data, action, amount);
 
         std::cout << "Got: " << action << " and " << amount << "\n";
 
@@ -144,6 +127,24 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
     std::string MakeAddress(const std::string& customer_pubkey) {
         return sha512(TRANSACTION_FAMILY_NAME).substr(0, 6) +
             sha512(customer_pubkey).substr(0, 64);
+    }
+
+    // Extract values from the payload.
+    // For this transaction family, the payload is simply encoded
+    // as a CSV (action, amount).
+    void payloadToActionValue(const std::string& payload,
+                              std::string& action,
+                              int32_t& value) {
+         std::vector<std::string> vs = split(payload, ',');
+
+         if (vs.size() == 2) {
+             action = vs[0];
+             value = std::stoi(vs[1]);
+         } else {
+             std::string error = "Invalid number of arguments: expected 2, got:"
+                 + std::to_string(vs.size()) + "\n";
+             throw sawtooth::InvalidTransaction(error);
+         }
     }
 
     // Handle the CookieJar "bake" action.
