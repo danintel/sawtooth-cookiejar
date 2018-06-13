@@ -16,7 +16,7 @@
 /*******************************************************************************
  * cookiejar_tp
  *
- * Cookie Jar Transaction Processor C++ program.
+ * Cookie Jar Transaction Processor written in C++.
  ******************************************************************************/
 
 #include <ctype.h>
@@ -68,9 +68,9 @@ std::vector<std::string> split(const std::string& str, char delimiter) {
     return tokens;
 }
 
-// Helper function to extract "action" string and "value" integer from the
-// payload. For this transaction family, the payload is simply encoded as
-// a simple CSV (action, amount), which is extracted here.
+// Extract values from the payload.
+// For this transaction family, the payload is simply encoded
+// as a CSV (action, amount).
 void payloadToActionValue(const std::string& payload,
                           std::string& action,
                           int32_t& value) {
@@ -128,9 +128,9 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
 
         // Choose what to do with the value, based on action:
         if (action == "bake") {
-            this->makeBake(customer_pubkey, amount);
+            this->doBake(customer_pubkey, amount);
         } else if (action == "eat") {
-            this->makeEat(customer_pubkey, amount);
+            this->doEat(customer_pubkey, amount);
         } else {
             std::string error = "Invalid action: '" + action + "'";
             throw sawtooth::InvalidTransaction(error);
@@ -148,74 +148,74 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
 
     // Handle the CookieJar "bake" action.
     // This example ignores overflow.
-    void makeBake(const std::string& customer_pubkey,
+    void doBake(const std::string& customer_pubkey,
                      const uint32_t& request_amount) {
-        std::string stored_balance_str;
-        uint32_t customer_available_balance = 0;
+        std::string stored_count_str;
+        uint32_t customer_available_count = 0;
 
         // Generate the unique state address based on user's public key
         auto address = this->MakeAddress(customer_pubkey);
-        LOG4CXX_DEBUG(logger, "CookieJarApplicator::makeBake Key: "
+        LOG4CXX_DEBUG(logger, "CookieJarApplicator::doBake Key: "
             << customer_pubkey << " Address: " << address);
 
         // Get the value stored at the state address for this user
-        if (this->state->GetState(&stored_balance_str, address)) {
-            std::cout << "Cookie count: " << stored_balance_str << "\n";
-            if (stored_balance_str.length() != 0) {
-                customer_available_balance = std::stoi(stored_balance_str);
+        if (this->state->GetState(&stored_count_str, address)) {
+            std::cout << "Cookie count: " << stored_count_str << "\n";
+            if (stored_count_str.length() != 0) {
+                customer_available_count = std::stoi(stored_count_str);
             }
         } else {
-            // If the state address doesn't exist we create a new account
+            // If the state address doesn't exist we create a new cookie jar.
             std::cout << "This is the first time we baked cookies.\n"
                 << "Creating a new cookie jar for user: "
                 << customer_pubkey << std::endl;
         }
 
         // Increment cookies by amount, extracted from the payload.
-        customer_available_balance += request_amount;
-        LOG4CXX_DEBUG(logger, "Storing new available balance: "
-                      << customer_available_balance << " units");
-        stored_balance_str = std::to_string(customer_available_balance);
+        customer_available_count += request_amount;
+        LOG4CXX_DEBUG(logger, "Storing new available cookies: "
+                      << customer_available_count << " units");
+        stored_count_str = std::to_string(customer_available_count);
 
         // Store the updated value in the user's unique state address.
-        this->state->SetState(address, stored_balance_str);
+        this->state->SetState(address, stored_count_str);
     }
 
     // Handle CookieJar "eat" action.
-    void makeEat(const std::string& customer_pubkey,
+    void doEat(const std::string& customer_pubkey,
                     const uint32_t& request_amount) {
         auto address = this->MakeAddress(customer_pubkey);
 
-        LOG4CXX_DEBUG(logger, "CookieJarApplicator::makeEat Key: "
+        LOG4CXX_DEBUG(logger, "CookieJarApplicator::doEat Key: "
             << customer_pubkey << " Address: " << address);
 
-        std::string stored_balance_str;
+        std::string stored_count_str;
 
-        // Retrieve the balance available for customer account.
-        uint32_t customer_available_balance = 0;
-        if (this->state->GetState(&stored_balance_str, address)) {
-            std::cout << "Available balance: " << stored_balance_str << "\n";
-            customer_available_balance = std::stoi(stored_balance_str);
+        // Retrieve the cookies available in the cookie jar.
+        uint32_t customer_available_count = 0;
+        if (this->state->GetState(&stored_count_str, address)) {
+            std::cout << "Available cookies: " << stored_count_str << "\n";
+            customer_available_count = std::stoi(stored_count_str);
         } else {
             std::string error = "Action was 'eat', but address was"
                 " not found in state for Key: " + customer_pubkey;
             throw sawtooth::InvalidTransaction(error);
         }
 
-        if ((customer_available_balance > 0) &&
-                (customer_available_balance >= request_amount)) {
-            customer_available_balance -= request_amount;
+        if ((customer_available_count > 0) &&
+                (customer_available_count >= request_amount)) {
+            customer_available_count -= request_amount;
         } else {
-            std::string error = "You don't have enough cookies to eat." +
+            std::string error = "You don't have enough cookies to eat. " +
                 customer_pubkey;
             throw sawtooth::InvalidTransaction(error);
         }
 
         // Encode the value back to a string for storage.
-        LOG4CXX_DEBUG(logger, "Storing new available balance:"
-                      << customer_available_balance << " units");
-        stored_balance_str = std::to_string(customer_available_balance);
-        this->state->SetState(address, stored_balance_str);
+        LOG4CXX_DEBUG(logger, "Storing new available cookies:"
+                      << customer_available_count << " units");
+        stored_count_str = std::to_string(customer_available_count);
+        this->state->SetState(address, stored_count_str);
     }
 };
 
