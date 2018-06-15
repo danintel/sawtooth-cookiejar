@@ -90,21 +90,21 @@ class CookieJarTransactionHandler(TransactionHandler):
         # It was serialized with CSV: action, value
         header = transaction.header
         payload_list = transaction.payload.decode().split(",")
-        operation = payload_list[0]
+        action = payload_list[0]
         amount = payload_list[1]
 
         # Get the signer's public key, sent in the header from the client.
         from_key = header.signer_public_key
 
-        # Perform the operation.
-        LOGGER.info("Operation = %s.", operation)
+        # Perform the action.
+        LOGGER.info("Action = %s.", action)
         LOGGER.info("Amount = %s.", amount) 
-        if operation == "bake":
+        if action == "bake":
             self._make_bake(context, amount, from_key)
-        elif operation == "eat":
+        elif action == "eat":
             self._make_eat(context, amount, from_key)
         else:
-            LOGGER.info("Unhandled action. Operation should be bake or eat")
+            LOGGER.info("Unhandled action. Action should be bake or eat")
 
     @classmethod
     def _make_bake(cls, context, amount, from_key):

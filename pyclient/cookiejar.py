@@ -77,13 +77,13 @@ def create_parser(prog_name):
     bake_subparser = subparsers.add_parser('bake',
                                            help='bake some cookies',
                                            parents=[parent_parser])
-    bake_subparser.add_argument('value',
+    bake_subparser.add_argument('amount',
                                 type=int,
                                 help='the number of cookies to bake')
     eat_subparser = subparsers.add_parser('eat',
                                           help='eat some cookies',
                                           parents=[parent_parser])
-    eat_subparser.add_argument('value',
+    eat_subparser.add_argument('amount',
                                type=int,
                                help='the number of cookies to eat')
     subparsers.add_parser('count',
@@ -102,14 +102,14 @@ def do_bake(args):
     '''Subcommand to bake cookies.  Calls client class to do the baking.'''
     privkeyfile = _get_private_keyfile(KEY_NAME)
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
-    response = client.bake(args.value)
+    response = client.bake(args.amount)
     print("Bake Response: {}".format(response))
 
 def do_eat(args):
     '''Subcommand to eat cookies.  Calls client class to do the eating.'''
     privkeyfile = _get_private_keyfile(KEY_NAME)
     client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
-    response = client.eat(args.value)
+    response = client.eat(args.amount)
     print("Eat Response: {}".format(response))
 
 def do_count():

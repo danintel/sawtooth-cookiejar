@@ -83,17 +83,17 @@ class CookieJarClient(object):
     # 1. Do any additional handling, if required
     # 2. Create a transaction and a batch
     # 2. Send to REST API
-    def bake(self, value):
-        '''Bake @value cookies for the cookie jar.'''
-        return self._wrap_and_send("bake", value)
+    def bake(self, amount):
+        '''Bake amount cookies for the cookie jar.'''
+        return self._wrap_and_send("bake", amount)
 
-    def eat(self, value):
-        '''Eat @value cookies from the cookie jar.'''
+    def eat(self, amount):
+        '''Eat amount cookies from the cookie jar.'''
         try:
-            ret_value = self._wrap_and_send("eat", value)
+            ret_amount = self._wrap_and_send("eat", amount)
         except Exception:
             raise Exception('Encountered an error during eat')
-        return ret_value
+        return ret_amount
 
     def count(self):
         '''Count the number of cookies in the cookie jar.'''
@@ -110,6 +110,7 @@ class CookieJarClient(object):
            The latter caller is made on the behalf of bake() & eat().
         '''
         url = "{}/{}".format(self._base_url, suffix)
+        print("URL to send to REST API is {}".format(url))
 
         headers = {}
 
@@ -133,7 +134,7 @@ class CookieJarClient(object):
 
         return result.text
 
-    def _wrap_and_send(self, action, value):
+    def _wrap_and_send(self, action, amount):
         '''Create a transaction, then wrap it in a batch.
 
            Even single transactions must be wrapped into a batch.
@@ -141,9 +142,8 @@ class CookieJarClient(object):
         '''
 
         # Generate a CSV UTF-8 encoded string as the payload.
-# XXXXX exception problem
         raw_payload = action
-        raw_payload = ",".join([raw_payload, str(value)])
+        raw_payload = ",".join([raw_payload, str(amount)])
         payload = raw_payload.encode() # Convert Unicode to bytes
 
         # Construct the address where we'll store our state.
