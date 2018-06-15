@@ -93,11 +93,12 @@ class CookieJarTransactionHandler(TransactionHandler):
         operation = payload_list[0]
         amount = payload_list[1]
 
-        # Get the public key sent from the client.
+        # Get the signer's public key, sent in the header from the client.
         from_key = header.signer_public_key
 
         # Perform the operation.
         LOGGER.info("Operation = " + operation)
+        LOGGER.info("Amount = " + amount)
         if operation == "bake":
             self._make_bake(context, amount, from_key)
         elif operation == "eat":
