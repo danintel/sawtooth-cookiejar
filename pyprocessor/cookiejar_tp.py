@@ -97,8 +97,8 @@ class CookieJarTransactionHandler(TransactionHandler):
         from_key = header.signer_public_key
 
         # Perform the operation.
-        LOGGER.info("Operation = " + operation)
-        LOGGER.info("Amount = " + amount)
+        LOGGER.info("Operation = %s.", operation)
+        LOGGER.info("Amount = %s.", amount) 
         if operation == "bake":
             self._make_bake(context, amount, from_key)
         elif operation == "eat":
@@ -110,7 +110,7 @@ class CookieJarTransactionHandler(TransactionHandler):
     def _make_bake(cls, context, amount, from_key):
         '''Bake (add) "amount" cookies.'''
         cookiejar_address = _get_cookiejar_address(from_key)
-        LOGGER.info('Got the key %s and the baker key %s.',
+        LOGGER.info('Got the key %s and the cookiejar address %s.',
                     from_key, cookiejar_address)
         current_entry = context.get_state([cookiejar_address])
         new_count = 0
