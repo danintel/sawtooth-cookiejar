@@ -147,14 +147,12 @@ class CookieJarTransactionHandler(TransactionHandler):
             except:
                 raise InternalError('Failed to load state data')
             if count < int(amount):
-                LOGGER.info('DEBUG: have %s cookies < cookies to eat %s.',
-                            count, amount)
                 raise InvalidTransaction('Not enough cookies to eat. '
                                          'The number should be <= %s.', count)
             else:
                 new_count = count - int(amount)
 
-        LOGGER.info('Eating %s cookies.', amount)
+        LOGGER.info('Eating %s cookies out of %d.', amount, count)
         state_data = str(new_count).encode('utf-8')
         addresses = context.set_state(
             {_get_cookiejar_address(from_key): state_data})
