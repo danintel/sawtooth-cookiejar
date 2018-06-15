@@ -112,15 +112,15 @@ class CookieJarTransactionHandler(TransactionHandler):
         cookiejar_address = _get_cookiejar_address(from_key)
         LOGGER.info('Got the key %s and the cookiejar address %s.',
                     from_key, cookiejar_address)
-        current_entry = context.get_state([cookiejar_address])
+        state_entries = context.get_state([cookiejar_address])
         new_count = 0
 
-        if current_entry == []:
+        if state_entries == []:
             LOGGER.info('No previous cookies, creating new cookie jar %s.',
                         from_key)
             new_count = int(amount)
         else:
-            count = int(current_entry[0].data)
+            count = int(state_entries[0].data)
             new_count = int(amount) + int(count)
 
         state_data = str(new_count).encode('utf-8')
@@ -136,13 +136,16 @@ class CookieJarTransactionHandler(TransactionHandler):
         LOGGER.info('Got the key %s and the cookiejar address %s.',
                     from_key, cookiejar_address)
 
-        current_entry = context.get_state([cookiejar_address])
+        state_entries = context.get_state([cookiejar_address])
         new_count = 0
 
-        if current_entry == []:
+        if state_entries == []:
             LOGGER.info('No cookie jar with the key %s.', from_key)
         else:
-            count = int(current_entry[0].data)
+            try:
+                count = int(state_entries[0].data)            
+            except:
+                raise InternalError('Failed to load state data')
             if count < int(amount):
                 LOGGER.info('DEBUG: have %s cookies < cookies to eat %s.',
                             count, amount)
