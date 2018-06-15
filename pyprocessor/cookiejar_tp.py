@@ -87,6 +87,7 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         # Get the payload and extract the cookiejar-specific information.
         # It has already been converted from Base64, but needs deserializing.
+        # It was serialized with CSV: action, value
         header = transaction.header
         payload_list = transaction.payload.decode().split(",")
         operation = payload_list[0]
