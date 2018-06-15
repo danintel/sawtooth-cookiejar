@@ -109,10 +109,7 @@ class CookieJarClient(object):
            Called by count() &  _wrap_and_send().
            The latter caller is made on the behalf of bake() & eat().
         '''
-        if self._base_url.startswith("http://"):
-            url = "{}/{}".format(self._base_url, suffix)
-        else:
-            url = "http://{}/{}".format(self._base_url, suffix)
+        url = "{}/{}".format(self._base_url, suffix)
 
         headers = {}
 
@@ -136,7 +133,7 @@ class CookieJarClient(object):
 
         return result.text
 
-    def _wrap_and_send(self, action, *values):
+    def _wrap_and_send(self, action, value):
         '''Create a transaction, then wrap it in a batch.
 
            Even single transactions must be wrapped into a batch.
@@ -144,12 +141,10 @@ class CookieJarClient(object):
         '''
 
         # Generate a CSV UTF-8 encoded string as the payload.
+# XXXXX exception problem
         raw_payload = action
-
-        for val in values:
-            raw_payload = ",".join([raw_payload, str(val)])
-
-        payload = raw_payload.encode()
+        raw_payload = ",".join([raw_payload, str(value)])
+        payload = raw_payload.encode() # Convert Unicode to bytes
 
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
