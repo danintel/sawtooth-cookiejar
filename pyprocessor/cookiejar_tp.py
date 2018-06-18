@@ -98,7 +98,7 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         # Perform the action.
         LOGGER.info("Action = %s.", action)
-        LOGGER.info("Amount = %s.", amount) 
+        LOGGER.info("Amount = %s.", amount)
         if action == "bake":
             self._make_bake(context, amount, from_key)
         elif action == "eat":
@@ -120,9 +120,9 @@ class CookieJarTransactionHandler(TransactionHandler):
                         from_key)
             new_count = int(amount)
         else:
-            try:                                             
-                count = int(state_entries[0].data)           
-            except:                                          
+            try:
+                count = int(state_entries[0].data)
+            except:
                 raise InternalError('Failed to load state data')
             new_count = int(amount) + int(count)
 
@@ -146,7 +146,7 @@ class CookieJarTransactionHandler(TransactionHandler):
             LOGGER.info('No cookie jar with the key %s.', from_key)
         else:
             try:
-                count = int(state_entries[0].data)            
+                count = int(state_entries[0].data)
             except:
                 raise InternalError('Failed to load state data')
             if count < int(amount):
