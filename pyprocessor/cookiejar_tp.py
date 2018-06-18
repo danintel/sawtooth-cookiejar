@@ -120,7 +120,10 @@ class CookieJarTransactionHandler(TransactionHandler):
                         from_key)
             new_count = int(amount)
         else:
-            count = int(state_entries[0].data)
+            try:                                             
+                count = int(state_entries[0].data)           
+            except:                                          
+                raise InternalError('Failed to load state data')
             new_count = int(amount) + int(count)
 
         state_data = str(new_count).encode('utf-8')

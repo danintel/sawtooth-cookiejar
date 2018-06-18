@@ -105,7 +105,8 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 * Replace simple CSV serialization with [CBOR](http://cbor.io/) serialization in the client and processor.
 Use the Sawtooth
 ["inkey"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/intkey_python)
-example application as a pattern
+example application as a pattern.
+If you get stuck, see the CBOR implementation in the `cbor` branch of this repository
 * Replace simple CSV serialization with [Protobuf](https://developers.google.com/protocol-buffers/) serialization in the client and processor.
 Use the Sawtooth
 ["XO"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/xo_python)
