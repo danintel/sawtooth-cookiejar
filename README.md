@@ -111,6 +111,7 @@ If you get stuck, see the CBOR implementation in the `cbor` branch of this repos
 Use the Sawtooth
 ["XO"](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples/xo_python)
 example application as a pattern
+If you get stuck, see the Protobuf implementation in the `protobuf` branch of this repository
 * Translate the Python transaction processor into another programming language.
 See
 [Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
@@ -118,6 +119,15 @@ and
 [Sawtooth SDK examples](https://github.com/hyperledger/sawtooth-core/tree/master/sdk/examples)
 * Also translate the Python client into another programming language.
 Note that the client and transaction processor do not need to be written in the same language
+
+## Branches and Serialization Examples
+* `master` is the main branch. It uses comma-separated variable (CSV) serialization
+* `cbor` uses Concise Binary Object Representation (CBOR) serialization
+* `protobuf` uses Protocol Buffer (Protobuf) serialization
+
+The `cbor` and `protobuf` branches modified files
+`pyclient/{Dockerfile,cookiejar_client.py}` and
+`pyprocessor/{Dockerfile,cookiejar_tp.py}`
 
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
