@@ -27,7 +27,6 @@ RUN \
     python3-sawtooth-sdk \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
- && ../proto/build.sh
 
 EXPOSE 4004/tcp
 

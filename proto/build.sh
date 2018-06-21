@@ -20,4 +20,6 @@
 
 set -e
 
-protoc -I=../proto --python_out=../proto ../proto/cookiejar.proto
+if [ ../proto/cookiejar.proto -nt ../proto/cookiejar_pb2.py ] ; then
+    protoc -I=../proto --python_out=../proto ../proto/cookiejar.proto
+fi
