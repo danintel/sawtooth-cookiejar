@@ -125,9 +125,11 @@ Note that the client and transaction processor do not need to be written in the 
 * `cbor` uses Concise Binary Object Representation (CBOR) serialization
 * `protobuf` uses Protocol Buffer (Protobuf) serialization
 
-The `cbor` and `protobuf` branches modified files
+Both the `cbor` and `protobuf` branches modify these files
 `pyclient/{Dockerfile,cookiejar_client.py}` and
-`pyprocessor/{Dockerfile,cookiejar_tp.py}`
+`pyprocessor/{Dockerfile,cookiejar_tp.py}` .
+The `protobuf` branch also adds files proto/{build.sh,cookiejar.proto} .
+Run `build.sh` in directory `proto` to create `cookiejar_pb2.py` before building Docker.
 
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
