@@ -19,7 +19,7 @@ It accepts input from a client CLI/GUI/BUI or other interface.
 
 import hashlib
 import base64
-import time
+import random
 import requests
 import yaml
 import cbor
@@ -164,7 +164,7 @@ class CookieJarClient(object):
             dependencies=[],
             payload_sha512=_hash(payload),
             batcher_public_key=self._public_key,
-            nonce=time.time().hex().encode()
+            nonce=random.random().hex().encode()
         ).SerializeToString()
 
         # Create a Transaction from the header and payload above.
