@@ -13,9 +13,9 @@
 // limitations under the License.
 // -----------------------------------------------------------------------------
 
-syntax = "proto3";
+syntax = "proto2";
 
 message CookiejarTransaction {
-    string action = 1; // Action is either "bake" or "eat"
-    uint32 amount = 2; // Amount is number of cookies
+    optional string action = 1; // Action is either "bake" or "eat"
+    optional uint32 amount = 2; // Amount is number of cookies
 }

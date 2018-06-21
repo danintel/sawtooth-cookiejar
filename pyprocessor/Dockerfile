@@ -33,4 +33,4 @@ EXPOSE 4004/tcp
 WORKDIR /project/cookiejar/pyprocessor
 ENV PATH "$PATH:/project/cookiejar/pyprocessor"
 
-CMD ../proto/build.sh && bash -c 'python3 ./cookiejar_tp.py'
+CMD bash -c 'python3 ./cookiejar_tp.py'

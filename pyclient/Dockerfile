@@ -77,4 +77,4 @@ ENV PATH "$PATH:/project/cookiejar/pyclient"
 
 EXPOSE 3000
 
-CMD unset PYTHONPATH && python3 setup.py clean --all && ../proto/build.sh && python3 setup.py build
+CMD unset PYTHONPATH && python3 setup.py clean --all && python3 setup.py build
