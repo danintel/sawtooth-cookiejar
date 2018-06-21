@@ -18,6 +18,7 @@ CookieJarTransactionHandler class interfaces for cookiejar Transaction Family.
 
 import hashlib
 import logging
+import cbor
 
 from sawtooth_sdk.processor.handler import TransactionHandler
 from sawtooth_sdk.processor.exceptions import InvalidTransaction
@@ -87,11 +88,18 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         # Get the payload and extract the cookiejar-specific information.
         # It has already been converted from Base64, but needs deserializing.
-        # It was serialized with CSV: action, value
+        # It was serialized with CBOR: action, amount
         header = transaction.header
-        payload_list = transaction.payload.decode().split(",")
-        action = payload_list[0]
-        amount = payload_list[1]
+        payload_dictionary = cbor.loads(transaction.payload)
+        try:
+            action = payload_dictionary['Action']
+        except AttributeError:
+            raise InvalidTransaction('Action is required')
+
+        try:
+            amount = payload_dictionary['Amount']
+        except AttributeError:
+            raise InvalidTransaction('Amount is required')
 
         # Get the signer's public key, sent in the header from the client.
         from_key = header.signer_public_key

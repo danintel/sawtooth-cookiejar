@@ -23,6 +23,7 @@ RUN \
     apt-transport-https \
     build-essential \
     ca-certificates \
+    python3-cbor \
     python3-sawtooth-sdk \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*

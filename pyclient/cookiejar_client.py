@@ -22,6 +22,7 @@ import base64
 import time
 import requests
 import yaml
+import cbor
 
 from sawtooth_signing import create_context
 from sawtooth_signing import CryptoFactory
@@ -141,10 +142,11 @@ class CookieJarClient(object):
            Called by bake() and eat().
         '''
 
-        # Generate a CSV UTF-8 encoded string as the payload.
-        raw_payload = action
-        raw_payload = ",".join([raw_payload, str(amount)])
-        payload = raw_payload.encode() # Convert Unicode to bytes
+        # Generate a CBOR UTF-8 encoded string as the payload.
+        payload = cbor.dumps({
+            'Action': action,
+            'Amount': amount
+        })
 
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
