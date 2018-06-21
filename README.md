@@ -129,7 +129,7 @@ Both the `cbor` and `protobuf` branches modify these files
 `pyclient/{Dockerfile,cookiejar_client.py}` and
 `pyprocessor/{Dockerfile,cookiejar_tp.py}` .
 The `protobuf` branch also adds files proto/{build.sh,cookiejar.proto} .
-Run `build.sh` in directory `proto` to create `cookiejar_pb2.py` before building Docker.
+Run `build.sh` in directory `proto` to create `cookiejar_pb2.py` before starting `docker-compse` .
 
 ## Contributing
 This FAQ is Apache 2.0 licensed and accepts contributions via
