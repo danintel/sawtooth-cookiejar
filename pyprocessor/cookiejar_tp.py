@@ -24,6 +24,10 @@ from sawtooth_sdk.processor.exceptions import InvalidTransaction
 from sawtooth_sdk.processor.exceptions import InternalError
 from sawtooth_sdk.processor.core import TransactionProcessor
 
+from sys import path
+path.append('../proto')
+from cookiejar_pb2 import CookiejarTransaction
+
 # hard-coded for simplicity (otherwise get the URL from the args in main):
 #DEFAULT_URL = 'tcp://localhost:4004'
 # For Docker:
@@ -87,11 +91,12 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         # Get the payload and extract the cookiejar-specific information.
         # It has already been converted from Base64, but needs deserializing.
-        # It was serialized with CSV: action, value
+        # It was serialized with Protobuf: string action, uint32 amount
         header = transaction.header
-        payload_list = transaction.payload.decode().split(",")
-        action = payload_list[0]
-        amount = payload_list[1]
+        cookie = CookiejarTransaction()
+        cookie.ParseFromString(transaction.payload)
+        action = cookie.action
+        amount = str(cookie.amount)
 
         # Get the signer's public key, sent in the header from the client.
         from_key = header.signer_public_key

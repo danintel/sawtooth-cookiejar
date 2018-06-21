@@ -69,7 +69,8 @@ RUN echo "deb http://repo.sawtooth.me/ubuntu/ci xenial universe" >> /etc/apt/sou
     python3-sawtooth-sdk \
     python3-sawtooth-cli \
  && apt-get clean \
- && rm -rf /var/lib/apt/lists/*
+ && rm -rf /var/lib/apt/lists/* \
+ && ../proto/build.sh
 
 WORKDIR /project/cookiejar/pyclient
 

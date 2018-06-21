@@ -33,6 +33,10 @@ from sawtooth_sdk.protobuf.batch_pb2 import BatchList
 from sawtooth_sdk.protobuf.batch_pb2 import BatchHeader
 from sawtooth_sdk.protobuf.batch_pb2 import Batch
 
+from sys import path
+path.append('../proto')
+from cookiejar_pb2 import CookiejarTransaction
+
 # The Transaction Family Name
 FAMILY_NAME = 'cookiejar'
 # TF Prefix is first 6 characters of SHA-512("cookiejar"), a4d219
@@ -141,10 +145,11 @@ class CookieJarClient(object):
            Called by bake() and eat().
         '''
 
-        # Generate a CSV UTF-8 encoded string as the payload.
-        raw_payload = action
-        raw_payload = ",".join([raw_payload, str(amount)])
-        payload = raw_payload.encode() # Convert Unicode to bytes
+        # Generate a Protobuf encoded string as the payload.
+        transaction = CookiejarTransaction()
+        transaction.action = action
+        transaction.amount = int(amount)
+        payload = transaction.SerializeToString()
 
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
