@@ -142,11 +142,17 @@ class CookieJarClient(object):
            Called by bake() and eat().
         '''
 
+<<<<<<< HEAD
         # Generate a CBOR UTF-8 encoded string as the payload.
         payload = cbor.dumps({
             'Action': action,
             'Amount': amount
         })
+=======
+        # Generate a CSV UTF-8 encoded string as the payload.
+        raw_payload = ",".join([action, str(amount)])
+        payload = raw_payload.encode() # Convert Unicode to bytes
+>>>>>>> 69e36d8c9c76a0387111791fe624ce7e58363f51
 
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
