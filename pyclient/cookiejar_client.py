@@ -63,7 +63,7 @@ class CookieJarClient(object):
                 private_key_str = key_fd.read().strip()
         except OSError as err:
             raise Exception(
-                'Failed to read private key {}: {}'.format( \
+                'Failed to read private key {}: {}'.format(
                     key_file, str(err)))
 
         try:
@@ -98,13 +98,13 @@ class CookieJarClient(object):
 
     def count(self):
         '''Count the number of cookies in the cookie jar.'''
-        result = self._send_to_restapi("state/{}".format(self._address))
+        result = self._send_to_rest_api("state/{}".format(self._address))
         try:
             return base64.b64decode(yaml.safe_load(result)["data"])
         except BaseException:
             return None
 
-    def _send_to_restapi(self, suffix, data=None, content_type=None):
+    def _send_to_rest_api(self, suffix, data=None, content_type=None):
         '''Send a REST command to the Validator via the REST API.
 
            Called by count() &  _wrap_and_send().
@@ -151,16 +151,15 @@ class CookieJarClient(object):
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
         address = self._address
-        input_address_list = [address]
-        output_address_list = [address]
+        input_and_output_address_list = [address]
 
         # Create a TransactionHeader.
         header = TransactionHeader(
             signer_public_key=self._public_key,
             family_name=FAMILY_NAME,
             family_version="1.0",
-            inputs=input_address_list,
-            outputs=output_address_list,
+            inputs=input_and_output_address_list,
+            outputs=input_and_output_address_list,
             dependencies=[],
             payload_sha512=_hash(payload),
             batcher_public_key=self._public_key,
@@ -192,7 +191,7 @@ class CookieJarClient(object):
         batch_list = BatchList(batches=[batch])
 
         # Send batch_list to the REST API
-        return self._send_to_restapi("batches",
-                                     batch_list.SerializeToString(),
-                                     'application/octet-stream')
+        return self._send_to_rest_api("batches",
+                                      batch_list.SerializeToString(),
+                                      'application/octet-stream')
 
