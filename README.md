@@ -124,6 +124,7 @@ Note that the client and transaction processor do not need to be written in the 
 * `master` is the main branch. It uses comma-separated variable (CSV) serialization
 * `cbor` uses Concise Binary Object Representation (CBOR) serialization
 * `protobuf` uses Protocol Buffer (Protobuf) serialization
+* `status` adds code to check a transaciton is committed after being sent
 
 Both the `cbor` and `protobuf` branches modify files
 `pyclient/{Dockerfile,cookiejar_client.py}` and
