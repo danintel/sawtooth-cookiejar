@@ -84,39 +84,46 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
     // The Apply() function does most of the work for the transaction processor
     // by processing a transaction for the cookiejar transaction family.
     void Apply() {
-        std::string action;
-        int32_t amount;
+        try {
+            std::string action;
+            int32_t amount;
 
-        std::cout << "CookieJarApplicator::Apply\n";
-        // Extract user public key from TransactionHeader
-        std::string customer_pubkey = this->txn->header()->GetValue(
-            sawtooth::TransactionHeaderSignerPublicKey);
+            std::cout << "CookieJarApplicator::Apply\n";
+            // Extract user public key from TransactionHeader
+            std::string customer_pubkey = this->txn->header()->GetValue(
+                sawtooth::TransactionHeaderSignerPublicKey);
 
-        // Extract the raw payload data for this transaction as a string.
-        const std::string& raw_data = this->txn->payload();
+            // Extract the raw payload data for this transaction as a string.
+            const std::string& raw_data = this->txn->payload();
 
-        // Extract the action and value from the payload string.
-        // It has already been converted from Base64, but needs deserializing.
-        // It is simply stored as a CSV: action,amount.
-        this->payloadToActionValue(raw_data, action, amount);
+            // Extract the action and value from the payload string.
+            // It has already been converted from Base64, but needs
+            // deserializing.  It is simply stored as a CSV: action,amount.
+            this->payloadToActionValue(raw_data, action, amount);
 
-        std::cout << "Got: " << action << " and " << amount << "\n";
+            std::cout << "Got: " << action << " and " << amount << "\n";
 
-        // Validate the amount is non-negative.
-        if (amount <= 0) {
-            std::string error = "Invalid action: '" + action
-                                  + "' with amount <= 0";
-            throw sawtooth::InvalidTransaction(error);
-        }
+            // Validate the amount is non-negative.
+            if (amount <= 0) {
+                std::string error = "Invalid action: '" + action
+                                      + "' with amount <= 0";
+                throw sawtooth::InvalidTransaction(error);
+            }
 
-        // Choose what to do with the value, based on action:
-        if (action == "bake") {
-            this->doBake(customer_pubkey, amount);
-        } else if (action == "eat") {
-            this->doEat(customer_pubkey, amount);
-        } else {
-            std::string error = "Invalid action: '" + action + "'";
-            throw sawtooth::InvalidTransaction(error);
+            // Choose what to do with the value, based on action:
+            if (action == "bake") {
+                this->doBake(customer_pubkey, amount);
+            } else if (action == "eat") {
+                this->doEat(customer_pubkey, amount);
+            } else {
+                std::string error = "Invalid action: '" + action + "'";
+                throw sawtooth::InvalidTransaction(error);
+            }
+        } catch(std::exception& e) {
+            std::cerr << "Unexpected exception exiting: " << std::endl;
+            std::cerr << e.what() << std::endl;
+        } catch(...) {
+            std::cerr << "Exiting due to unknown exception." << std::endl;
         }
     }
 
