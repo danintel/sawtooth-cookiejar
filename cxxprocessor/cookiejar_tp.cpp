@@ -119,6 +119,8 @@ class CookieJarApplicator:  public sawtooth::TransactionApplicator {
                 std::string error = "Invalid action: '" + action + "'";
                 throw sawtooth::InvalidTransaction(error);
             }
+        } catch(sawtooth::InvalidTransaction& e) {
+                throw;
         } catch(std::exception& e) {
             std::cerr << "Unexpected exception exiting: " << std::endl;
             std::cerr << e.what() << std::endl;
