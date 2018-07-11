@@ -20,6 +20,7 @@ It accepts input from a client CLI/GUI/BUI or other interface.
 import hashlib
 import base64
 import random
+import time
 import requests
 import yaml
 import cbor
@@ -86,12 +87,12 @@ class CookieJarClient(object):
     # 2. Send to REST API
     def bake(self, amount):
         '''Bake amount cookies for the cookie jar.'''
-        return self._wrap_and_send("bake", amount)
+        return self._wrap_and_send("bake", amount, wait=10)
 
     def eat(self, amount):
         '''Eat amount cookies from the cookie jar.'''
         try:
-            ret_amount = self._wrap_and_send("eat", amount)
+            ret_amount = self._wrap_and_send("eat", amount, wait=10)
         except Exception:
             raise Exception('Encountered an error during eat')
         return ret_amount
@@ -135,29 +136,44 @@ class CookieJarClient(object):
 
         return result.text
 
-    def _wrap_and_send(self, action, amount):
+    def _wait_for_status(self, batch_id, wait, result):
+        '''Wait until transaction status is not PENDING (COMMITTED or error).
+
+           'wait' is time to wait for status, in seconds.
+        '''
+        if wait and wait > 0:
+            waited = 0
+            start_time = time.time()
+            while waited < wait:
+                result = self._send_to_rest_api("batch_statuses?id={}&wait={}"
+                                               .format(batch_id, wait))
+                status = yaml.safe_load(result)['data'][0]['status']
+                waited = time.time() - start_time
+
+                if status != 'PENDING':
+                    return result
+            return "Transaction timed out after waiting {} seconds." \
+               .format(wait)
+        else:
+            return result
+
+
+    def _wrap_and_send(self, action, amount, wait=None):
         '''Create a transaction, then wrap it in a batch.
 
            Even single transactions must be wrapped into a batch.
            Called by bake() and eat().
         '''
 
-<<<<<<< HEAD
         # Generate a CBOR UTF-8 encoded string as the payload.
         payload = cbor.dumps({
             'Action': action,
             'Amount': amount
         })
-=======
-        # Generate a CSV UTF-8 encoded string as the payload.
-        raw_payload = ",".join([action, str(amount)])
-        payload = raw_payload.encode() # Convert Unicode to bytes
->>>>>>> 69e36d8c9c76a0387111791fe624ce7e58363f51
 
         # Construct the address where we'll store our state.
         # We just have one input and output address (the same one).
-        address = self._address
-        input_and_output_address_list = [address]
+        input_and_output_address_list = [self._address]
 
         # Create a TransactionHeader.
         header = TransactionHeader(
@@ -195,9 +211,13 @@ class CookieJarClient(object):
 
         # Create a Batch List from Batch above
         batch_list = BatchList(batches=[batch])
+        batch_id = batch_list.batches[0].header_signature
 
         # Send batch_list to the REST API
-        return self._send_to_rest_api("batches",
-                                      batch_list.SerializeToString(),
-                                      'application/octet-stream')
+        result = self._send_to_rest_api("batches",
+                                       batch_list.SerializeToString(),
+                                       'application/octet-stream')
+
+        # Wait until transaction status is COMMITTED, error, or timed out
+        return self._wait_for_status(batch_id, wait, result)
 
