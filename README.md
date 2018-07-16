@@ -97,6 +97,10 @@ To run sawtooth-simplewallet without dockers, we'll have to use a Ubuntu 16.04 O
 8. Start the cookiejar client with
 `./pyclient/cookiejar.py` and follow the "sample commands" above
 
+## Simple Events Handler
+A simple events handler is included.  To run, start the validator then
+type the following on the command line:
+`./events_client.py`
 
 ## Exercises for the User
 * Add a new function, `empty` which empties the cookie jar (sets the count to 0) in the client and processor
