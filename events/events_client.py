@@ -41,7 +41,6 @@ COOKIEJAR_TP_ADDRESS_PREFIX = 'a4d219'
 
 def listen_to_events(delta_filters=None):
     '''Listen to cookiejar state-delta events.'''
-    # https://sawtooth.hyperledger.org/docs/core/nightly/master/app_developers_guide/zmq_event_subscription.html
 
     # Subscribe to events
     block_commit_subscription = events_pb2.EventSubscription(
