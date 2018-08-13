@@ -1,0 +1,3 @@
+/project/cookiejar/cxxprocessor/build/CMakeFiles/rebuild_cache.dir
+/project/cookiejar/cxxprocessor/build/CMakeFiles/edit_cache.dir
+/project/cookiejar/cxxprocessor/build/CMakeFiles/cookiejar_tp.dir

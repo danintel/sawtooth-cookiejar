@@ -1,0 +1,42 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/project/cookiejar/cxxprocessor/cookiejar_tp.cpp
+ctype.h
+-
+string.h
+-
+log4cxx/logger.h
+-
+log4cxx/basicconfigurator.h
+-
+log4cxx/level.h
+-
+sawtooth_sdk/sawtooth_sdk.h
+-
+sawtooth_sdk/exceptions.h
+-
+cryptopp/sha.h
+-
+cryptopp/filters.h
+-
+cryptopp/hex.h
+-
+iostream
+-
+string
+-
+sstream
+-
+utility
+-
+list
+-
+vector
+-
+

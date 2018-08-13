@@ -17,6 +17,9 @@ The cookie jar count is stored at an 70 hex digit address derived from:
 * a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
 * the first 64 hex characters of the SHA-512 hash of the "mycookiejar" public key in hex.
 
+## Presentation
+I have a slide presentation in PDF format, "Hyperledger Sawtooth Application Developer Overview using 'CookieJar'" that uses this example application.  For a copy, contact me using my email at https://github.com/danintel
+
 ## Components
 The cookie jar transaction family contains two parts, both written in Python 3:
 1. The client application has two parts:
@@ -137,11 +140,11 @@ The `protobuf` branch also adds files
 Run `build.sh` in directory `proto` to create `cookiejar_pb2.py` .
 
 ## Contributing
-This FAQ is Apache 2.0 licensed and accepts contributions via
+This software is Apache 2.0 licensed and accepts contributions via
 [GitHub](https://github.com/danintel/sawtooth-faq) pull requests.
 Each commit must include a `Signed-off-by:` in the commit message (`git commit -s`). This sign-off means you agree the commit satisfies the [Developer Certificate of Origin (DCO).](https://developercertificate.org/)
 
-This software is derived from the
+This example software is derived from the
 [Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
 application.
 Simplewallet supports more programming languages and handles transactions with multiple keys.
