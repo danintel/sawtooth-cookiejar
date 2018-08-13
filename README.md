@@ -18,7 +18,7 @@ The cookie jar count is stored at an 70 hex digit address derived from:
 * the first 64 hex characters of the SHA-512 hash of the "mycookiejar" public key in hex.
 
 ## Presentation
-I have a slide presentation in PDF format, "Hyperledgetr Sawtooth Application Developer Overview using 'CookieJar'" that uses this example application.  For a copy, contact me using my email at https://github.com/danintel
+I have a slide presentation in PDF format, "Hyperledger Sawtooth Application Developer Overview using 'CookieJar'" that uses this example application.  For a copy, contact me using my email at https://github.com/danintel
 
 ## Components
 The cookie jar transaction family contains two parts, both written in Python 3:
