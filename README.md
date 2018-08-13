@@ -140,11 +140,11 @@ The `protobuf` branch also adds files
 Run `build.sh` in directory `proto` to create `cookiejar_pb2.py` .
 
 ## Contributing
-This FAQ is Apache 2.0 licensed and accepts contributions via
+This software is Apache 2.0 licensed and accepts contributions via
 [GitHub](https://github.com/danintel/sawtooth-faq) pull requests.
 Each commit must include a `Signed-off-by:` in the commit message (`git commit -s`). This sign-off means you agree the commit satisfies the [Developer Certificate of Origin (DCO).](https://developercertificate.org/)
 
-This software is derived from the
+This example software is derived from the
 [Sawtooth Simplewallet](https://github.com/askmish/sawtooth-simplewallet)
 application.
 Simplewallet supports more programming languages and handles transactions with multiple keys.
