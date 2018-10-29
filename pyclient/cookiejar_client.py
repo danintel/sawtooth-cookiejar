@@ -107,6 +107,14 @@ class CookieJarClient(object):
             return base64.b64decode(yaml.safe_load(result)["data"])
         except BaseException:
             return None
+			
+    def clear(self):
+        '''Empty the cookie jar.'''
+        try:
+            ret_amount = self._wrap_and_send("clear", 0, wait=10)
+        except Exception:
+            raise Exception('Encountered an error during clear')
+        return ret_amount
 
     def _send_to_rest_api(self, suffix, data=None, content_type=None):
         '''Send a REST command to the Validator via the REST API.
