@@ -38,7 +38,6 @@ public class CookieJarProcessor {
  *
  * It handles the processing of operations(bake/eat/clear) supported by cookiejar application.
  * It sets the name space prefix, versions and transaction family name.
- * This is the place where you implement your transaction specific logic(Inside apply() method
  * 
  ***************************************************************************** */
 
@@ -86,7 +85,7 @@ class CookieJarHandler implements TransactionHandler {
 		logger.info("User Public Key = " + userPublicKey + " ; Address Key = " + userAddress);
 		// Extract the payload as utf8 string from the transaction, in request variable
 		String payload = request.getPayload().toStringUtf8();
-	     // Split the csv utf-8 string
+		// Split the csv utf-8 string
 		String[] payloadList = payload.split(",");
 		if (payloadList.length == 0 || payloadList.length > MAX_ARG_LENGTH) {
 			throw new InvalidTransactionException(
@@ -134,7 +133,7 @@ class CookieJarHandler implements TransactionHandler {
 
 	private String getUserAddress(String userPublicKey) {
 		// Generate unique key(user address key) from the cookiejar namespace
-        // and user signer public key
+		// and user signer public key
 		return Utils.hash512(TXN_FAMILY_NAME.getBytes()).substring(0, 6)
 				+ Utils.hash512(userPublicKey.getBytes()).substring(0, 64);
 	}
@@ -164,7 +163,7 @@ class CookieJarHandler implements TransactionHandler {
 		logger.info("Baking " + cookieCount + " cookies");
 		// getState() will return empty map if user address key doesn't exist in state
 		if (currStateCount.isEmpty()) {
-			 logger.info("No cookie jar availble");
+			 logger.info("No cookie jar available");
 			 logger.info("Creating a new jar for the user: " + userPublicKey);
 		}else {
 			cookieCount += Integer.valueOf(currStateCount);
