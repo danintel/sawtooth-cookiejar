@@ -16,6 +16,12 @@
 FROM ubuntu:xenial
 
 RUN \
+ if [ ! -z $HTTP_PROXY ] && [ -z $http_proxy ]; then \
+  http_proxy=$HTTP_PROXY; \
+ fi; \
+ if [ ! -z $HTTPS_PROXY ] && [ -z $https_proxy ]; then \
+  https_proxy=$HTTPS_PROXY; \
+ fi; \
  apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
  && echo "deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe" >> /etc/apt/sources.list \
  && apt-get update \
