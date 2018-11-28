@@ -90,6 +90,11 @@ def create_parser(prog_name):
                           help='show number of cookies in ' +
                           'the cookie jar',
                           parents=[parent_parser])
+						  
+    clear_subparser = subparsers.add_parser('clear',
+                                           help='empties cookie jar',
+                                           parents=[parent_parser])					  
+						  
     return parser
 
 def _get_private_keyfile(key_name):
@@ -121,6 +126,13 @@ def do_count():
         print("\nThe cookie jar has {} cookies.\n".format(data.decode()))
     else:
         raise Exception("Cookie jar data not found")
+		
+def do_clear():
+    '''Subcommand to empty cookie jar. Calls client class to do the clearing.'''
+    privkeyfile = _get_private_keyfile(KEY_NAME)
+    client = CookieJarClient(base_url=DEFAULT_URL, key_file=privkeyfile)
+    response = client.clear()
+    print("Clear Response: {}".format(response))
 
 def main(prog_name=os.path.basename(sys.argv[0]), args=None):
     '''Entry point function for the client CLI.'''
@@ -139,6 +151,8 @@ def main(prog_name=os.path.basename(sys.argv[0]), args=None):
             do_eat(args)
         elif args.command == 'count':
             do_count()
+        elif args.command == 'clear':
+            do_clear()	
         else:
             raise Exception("Invalid command: {}".format(args.command))
 

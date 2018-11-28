@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++11   CMakeFiles/cookiejar_tp.dir/cookiejar_tp.cpp.o  -o bin/cookiejar_tp -lsawtooth -lproto -lprotobuf -lzmq -lzmqpp -llog4cxx -lcryptopp -lpthread 

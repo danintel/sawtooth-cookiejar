@@ -31,21 +31,16 @@ RUN \
     apt-transport-https \
     build-essential \
     ca-certificates \
-    cmake  \
-    g++  \
-    inotify-tools \
-    libcrypto++-dev \
-    liblog4cxx-dev \
-    libtool \
-    libzmqpp-dev \
-    libssl-dev \
-    sawtooth-cxx-sdk \
+    maven \
+    default-jre \
+    default-jdk \
+    git \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 
 EXPOSE 4004/tcp
 
-WORKDIR /project/cookiejar/cxxprocessor
+WORKDIR /project/cookiejar/javaprocessor
 
-CMD bash -c "./build.sh && ./build/bin/cookiejar_tp"
+CMD bash -c "./build_java_processor.sh"
