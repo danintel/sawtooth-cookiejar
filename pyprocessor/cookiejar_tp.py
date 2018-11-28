@@ -103,6 +103,8 @@ class CookieJarTransactionHandler(TransactionHandler):
             self._make_bake(context, amount, from_key)
         elif action == "eat":
             self._make_eat(context, amount, from_key)
+        elif action == "clear":
+            self._empty_cookie_jar(context, amount, from_key)
         else:
             LOGGER.info("Unhandled action. Action should be bake or eat")
 
@@ -162,6 +164,23 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         if len(addresses) < 1:
             raise InternalError("State Error")
+
+    @classmethod
+    def _empty_cookie_jar(cls, context, amount, from_key):
+        cookie_jar_address = _get_cookiejar_address(from_key)
+        LOGGER.info("fetched key %s and state address %s", from_key, cookie_jar_address)
+        state_entries = context.get_state([cookie_jar_address])
+        if state_entries == []:
+            LOGGER.info('No cookie jar with the key %s.', from_key)
+            return
+        else:
+            state_data = str(0).encode('utf-8')
+            addresses = context.set_state(
+                {cookie_jar_address: state_data})
+
+        if len(addresses) < 1:
+            raise InternalError("State update Error")
+        LOGGER.info("SET global state success")
 
 def main():
     '''Entry-point function for the cookiejar Transaction Processor.'''

@@ -152,7 +152,7 @@ Simplewallet supports more programming languages and handles transactions with m
 ## License
 This example and Hyperledger Sawtooth software are licensed under the [Apache License Version 2.0](LICENSE) software license.
 
-![Photo of sawtooth cookie cutters]( sawtooth-cookie-cutters.jpg "sawtooth cookie cutters")
+![Photo of sawtooth cookie cutters]( images/sawtooth-cookie-cutters.jpg "Sawtooth cookie cutters")
 <br /> *Antique sawtooth cookie cutters.*
 
 © Copyright 2018, Intel Corporation.
