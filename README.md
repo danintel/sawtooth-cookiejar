@@ -2,7 +2,7 @@
 Simple cookie jar example of a Sawtooth application.
 
 ## Introduction
-This is a minimal example of a Sawtooth 1.0 application,
+This is a minimal example of a Sawtooth 1.1 application,
 with a transaction processor and corresponding client.
 This example demonstrates a simple use case, where a baker bakes or eats cookies saved in a virtual cookie jar.
 

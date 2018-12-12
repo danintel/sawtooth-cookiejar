@@ -49,21 +49,19 @@ services:
       - 'no_proxy=rest-api,validator-1,${no_proxy}'
     volumes:
       - '.:/project/cookiejar/'
-    ports:
-      - '0.0.0.0:3000:3000'
     depends_on:
       - rest-api
     entrypoint: "bash -c \"sawtooth keygen --force mycookiejar && tail -f /dev/null\""
     stop_signal: SIGKILL
 
   settings-tp:
-    image: hyperledger/sawtooth-settings-tp:1.0
+    image: hyperledger/sawtooth-settings-tp:1.1
     depends_on:
       - validator-1
     command: settings-tp -vv --connect tcp://validator:4004
 
   rest-api:
-    image: hyperledger/sawtooth-rest-api:1.0
+    image: hyperledger/sawtooth-rest-api:1.1
     container_name: rest-api
     expose:
       - 8008
@@ -76,7 +74,7 @@ services:
     stop_signal: SIGKILL
 
   validator-registry-tp:
-    image: hyperledger/sawtooth-poet-validator-registry-tp:1.0
+    image: hyperledger/sawtooth-poet-validator-registry-tp:1.1
     container_name: sawtooth-poet-validator-registry-tp
     expose:
       - 4004
@@ -86,7 +84,7 @@ services:
     stop_signal: SIGKILL
 
   validator-1:
-    image: hyperledger/sawtooth-validator:1.0
+    image: hyperledger/sawtooth-validator:1.1
     container_name: validator-1
     expose:
       - 4004
@@ -116,6 +114,7 @@ services:
         sawtooth-validator -v \
           --bind network:tcp://eno1:8800 \
           --bind component:tcp://127.0.0.1:4004 \
+          --bind consensus:tcp://eth0:5050 \
           --peering dynamic \
           --endpoint tcp://192.168.1.93:8800 \
           --seeds tcp://192.168.1.42:8800 \
@@ -128,5 +127,11 @@ services:
         /project/sawtooth-core/consensus/poet/core"
     stop_signal: SIGKILL
 
-
- 
+  devmode-engine:
+    image: hyperledger/sawtooth-devmode-engine-rust:1.1
+    ports:
+      - '5050:5050'
+    container_name: sawtooth-devmode-engine-rust-default
+    depends_on:
+      - validator
+    entrypoint: devmode-engine-rust --connect tcp://validator:5050
