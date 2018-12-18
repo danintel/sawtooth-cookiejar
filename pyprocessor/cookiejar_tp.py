@@ -170,7 +170,7 @@ class CookieJarTransactionHandler(TransactionHandler):
         if len(addresses) < 1:
             raise InternalError("State Error")
 
-@classmethod
+    @classmethod
     def _empty_cookie_jar(cls, context, amount, from_key):
         cookie_jar_address = _get_cookiejar_address(from_key)
         LOGGER.info("fetched key %s and state address %s", from_key, cookie_jar_address)
