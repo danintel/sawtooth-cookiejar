@@ -2,7 +2,7 @@
 Simple cookie jar example of a Sawtooth application.
 
 ## Introduction
-This is a minimal example of a Sawtooth 1.0 application,
+This is a minimal example of a Sawtooth 1.1 application,
 with a transaction processor and corresponding client.
 This example demonstrates a simple use case, where a baker bakes or eats cookies saved in a virtual cookie jar.
 
@@ -17,8 +17,10 @@ The cookie jar count is stored at an 70 hex digit address derived from:
 * a 6-hex character prefix (the "cookiejar" Transaction Family namespace) and
 * the first 64 hex characters of the SHA-512 hash of the "mycookiejar" public key in hex.
 
-## Presentation
-I have a slide presentation in PDF format, "Hyperledger Sawtooth Application Developer Overview using 'CookieJar'" that uses this example application.  For a copy, contact me using my email at https://github.com/danintel
+## Video Presentation
+I have a video presentation on YouTube that uses this application as an example. It is "Hyperledger Sawtooth Application Developer Overview using 'CookieJar'". It is at https://www.youtube.com/watch?v=VFXary3rwY0
+
+[![Sawtooth Application development video](images/youtube-thumbnail.jpg)](https://www.youtube.com/watch?v=VFXary3rwY0)
 
 ## Components
 The cookie jar transaction family contains two parts, both written in Python 3:
