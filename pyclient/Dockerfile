@@ -26,7 +26,7 @@ RUN \
  fi; \
  echo "deb http://repo.sawtooth.me/ubuntu/ci xenial universe" >> /etc/apt/sources.list \
  && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
- && echo "deb http://repo.sawtooth.me/ubuntu/1.0/stable xenial universe" >> /etc/apt/sources.list \
+ && echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/bumper/stable xenial universe" >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y -q --no-install-recommends \
     apt-utils \
@@ -45,7 +45,6 @@ RUN \
     python3-cbor \
     python3-cchardet=2.0a3-1 \
     python3-chardet=2.3.0-1 \
-    python3-cbor \
     python3-colorlog \
     python3-cov-core \
     python3-cryptography-vectors=1.7.2-1 \
