@@ -32,9 +32,9 @@ from sawtooth_sdk.protobuf.validator_pb2 import Message
 
 # hard-coded for simplicity (otherwise get the URL from the args in main):
 # For localhost access:
-DEFAULT_VALIDATOR_URL = 'tcp://localhost:4004'
+#DEFAULT_VALIDATOR_URL = 'tcp://localhost:4004'
 # For Docker access:
-#DEFAULT_VALIDATOR_URL = 'tcp://validator:4004'
+DEFAULT_VALIDATOR_URL = 'tcp://validator:4004'
 # Calculated from the 1st 6 characters of SHA-512("cookiejar"):
 COOKIEJAR_TP_ADDRESS_PREFIX = 'a4d219'
 
@@ -47,8 +47,13 @@ def listen_to_events(delta_filters=None):
         event_type="sawtooth/block-commit")
     state_delta_subscription = events_pb2.EventSubscription(
         event_type="sawtooth/state-delta", filters=delta_filters)
+    bake_subscription = events_pb2.EventSubscription(
+        event_type="cookiejar/bake")
+    eat_subscription = events_pb2.EventSubscription(
+        event_type="cookiejar/eat")
     request = client_event_pb2.ClientEventsSubscribeRequest(
-        subscriptions=[block_commit_subscription, state_delta_subscription])
+        subscriptions=[block_commit_subscription, state_delta_subscription, 
+        bake_subscription, eat_subscription])
 
     # Send the subscription request
     stream = Stream(DEFAULT_VALIDATOR_URL)

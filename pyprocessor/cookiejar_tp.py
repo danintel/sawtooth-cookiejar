@@ -133,6 +133,9 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         if len(addresses) < 1:
             raise InternalError("State Error")
+        context.add_event(
+            event_type="cookiejar/bake",
+            attributes=[("cookies-baked", amount)])
 
     @classmethod
     def _make_eat(cls, context, amount, from_key):
@@ -164,6 +167,9 @@ class CookieJarTransactionHandler(TransactionHandler):
 
         if len(addresses) < 1:
             raise InternalError("State Error")
+        context.add_event(
+            event_type="cookiejar/eat",
+            attributes=[("cookies-ate", amount)])
 
     @classmethod
     def _empty_cookie_jar(cls, context, amount, from_key):
