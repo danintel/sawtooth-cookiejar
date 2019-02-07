@@ -16,6 +16,8 @@
 CookieJarTransactionHandler class interfaces for cookiejar Transaction Family.
 '''
 
+import traceback
+import sys
 import hashlib
 import logging
 
