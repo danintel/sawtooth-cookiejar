@@ -22,7 +22,9 @@ RUN \
  if [ ! -z $HTTPS_PROXY ] && [ -z $https_proxy ]; then \
   https_proxy=$HTTPS_PROXY; \
  fi; \
- apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
+ apt-get update; \
+ apt-get install curl -y; \
+ curl -sSL 'http://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8AA7AF1F1091A5FD' | apt-key add - \
  && echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/bumper/stable xenial universe" >> /etc/apt/sources.list \
  && apt-get update \
  && apt-get install -y -q \
