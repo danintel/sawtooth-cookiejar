@@ -17,13 +17,16 @@ FROM ubuntu:xenial
 
 RUN echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/ci xenial universe" >> /etc/apt/sources.list \
  && echo "deb http://archive.ubuntu.com/ubuntu bionic-backports universe" >> /etc/apt/sources.list \
+ && echo 'deb http://ppa.launchpad.net/gophers/archive/ubuntu xenial main' >> /etc/apt/sources.list \
  && (apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 8AA7AF1F1091A5FD \
    || apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 8AA7AF1F1091A5FD) \
+ && (apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 308C15A29AD198E9 \
+   || apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 308C15A29AD198E9) \
  && apt-get update \
  && apt-get install -y \
     build-essential \
     git \
-    golang-1.9-go \
+    golang-1.11-go \
     libssl-dev \
     libzmq5 \
     libzmq3-dev \
@@ -35,7 +38,7 @@ RUN echo "deb [arch=amd64] http://repo.sawtooth.me/ubuntu/ci xenial universe" >>
 
 RUN mkdir -p /project/cookiejar/events/go
 ENV GOPATH=/go:/go/src/github.com/hyperledger/sawtooth-sdk-go:/project/cookiejar/events/go
-ENV PATH=$PATH::/go/bin:/usr/lib/go-1.9/bin:/project/cookiejar/events/go
+ENV PATH=$PATH::/go/bin:/usr/lib/go-1.11/bin:/project/cookiejar/events/go
 
 RUN go get -u \
     github.com/golang/protobuf/proto \
