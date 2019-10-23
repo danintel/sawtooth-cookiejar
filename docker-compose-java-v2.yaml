@@ -55,13 +55,13 @@ services:
     stop_signal: SIGKILL
 
   settings-tp:
-    image: hyperledger/sawtooth-settings-tp:1.1
+    image: hyperledger/sawtooth-settings-tp:1.2
     depends_on:
       - validator-2
     command: settings-tp -vv --connect tcp://validator:4004
 
   rest-api:
-    image: hyperledger/sawtooth-rest-api:1.1
+    image: hyperledger/sawtooth-rest-api:1.2
     container_name: rest-api
     expose:
       - 8008
@@ -74,7 +74,7 @@ services:
     stop_signal: SIGKILL
 
   validator-registry-tp:
-    image: hyperledger/sawtooth-poet-validator-registry-tp:1.1
+    image: hyperledger/sawtooth-poet-validator-registry-tp:1.2
     container_name: sawtooth-poet-validator-registry-tp
     expose:
       - 4004
@@ -84,7 +84,7 @@ services:
     stop_signal: SIGKILL
 
   validator-2:
-    image: hyperledger/sawtooth-validator:1.1
+    image: hyperledger/sawtooth-validator:1.2
     container_name: sawtooth-validator-default-2
     expose:
       - 4004
@@ -109,7 +109,7 @@ services:
     stop_signal: SIGKILL
 
   devmode-engine:
-    image: hyperledger/sawtooth-devmode-engine-rust:1.1
+    image: hyperledger/sawtooth-devmode-engine-rust:1.2
     ports:
       - '5050:5050'
     container_name: sawtooth-devmode-engine-rust-default
